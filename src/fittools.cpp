@@ -20,9 +20,43 @@
 
 #include "fittools.h"
 
-FitTools::FitTools()
+FitTools::FitTools(std::vector< double > x_array, std::vector< double > y_array, std::vector< double > errors_array)
+{
+  this->noerror = false;
+}
+
+FitTools::FitTools(std::vector< double > x_array, std::vector< double > y_array)
+{
+  this->noerror = true;
+}
+
+
+FitTools::LinearFitResult FitTools::_fit_linear()
+{
+  LinearFitResult result;
+  
+  
+}
+
+FitTools::SlopeFitResult FitTools::_fit_slope()
 {
 
 }
+
+FitTools::HorizontalFitResult FitTools::_fit_horizontal()
+{
+
+}
+
+double FitTools::mean(std::vector< double > data, std::vector< double > weight)
+{
+
+}
+
+double FitTools::mean(std::vector< double > data)
+{
+  
+}
+
 
 /* vim: set ts=2 sw=2 et: */
