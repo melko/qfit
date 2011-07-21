@@ -27,8 +27,10 @@ class qfit : public QMainWindow
 {
 Q_OBJECT
 public:
-    qfit();
-    virtual ~qfit();
+  qfit();
+  virtual ~qfit();
 };
 
 #endif // qfit_H
+
+/* vim: set ts=2 sw=2 et: */

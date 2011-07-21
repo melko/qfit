@@ -24,8 +24,10 @@
 
 int main(int argc, char** argv)
 {
-    QApplication app(argc, argv);
-    qfit foo;
-    foo.show();
-    return app.exec();
+  QApplication app(argc, argv);
+  qfit foo;
+  foo.show();
+  return app.exec();
 }
+
+/* vim: set ts=2 sw=2 et: */
