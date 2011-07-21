@@ -50,12 +50,24 @@ FitTools::HorizontalFitResult FitTools::_fit_horizontal()
 
 double FitTools::mean(std::vector< double > data, std::vector< double > weight)
 {
+  double result = 0, sum_weight = 0;
+  for(int i=0;i<data.size();i++){
+    result += data.at(i)*weight.at(i);
+    sum_weight += weight.at(i);
+  }
+  
+  return result/sum_weight;
 
 }
 
 double FitTools::mean(std::vector< double > data)
 {
+  double result = 0;
+  for(int i=0;i<data.size();i++){
+    result += data.at(i);
+  }
   
+  return result/data.size();
 }
 
 
