@@ -21,6 +21,7 @@
 #ifndef FITTOOLS_H
 #define FITTOOLS_H
 
+#include <math.h>
 #include <vector>
 
 using namespace std;
@@ -29,8 +30,9 @@ class FitTools
 { 
 
 public:
-  static double mean(vector<double> data, vector<double> weight);
-  static double mean(vector<double> data);
+  static double mean(vector< double >* data, vector< double >* weight);
+  static double mean(vector< double >* data);
+  static vector<double> vec_product(vector<double> *v1, vector<double> *v2);
   
   struct LinearFitResult {
     double m, m_error;
@@ -55,15 +57,15 @@ public:
     LOGARITMIC_FIT
   };
 
-  FitTools(vector<double> x_array, vector<double> y_array, vector<double> errors_array);
-  FitTools(vector<double> x_array, vector<double> y_array);
+  FitTools(vector<double> *x_array, vector<double> *y_array, vector<double> *errors_array);
+  FitTools(vector<double> *x_array, vector<double> *y_array, double error);
 
-private:
-  bool noerror;
-  
-  vector<long> xdata;
-  vector<long> ydata;
-  vector<long> yerrors;
+private:  
+  vector<double> xdata;
+  vector<double> ydata;
+  vector<double> yerrors;
+  vector<double> yweights;
+  double sum_weight;
 
   FitTools::LinearFitResult _fit_linear();
   FitTools::SlopeFitResult _fit_slope();
