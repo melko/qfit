@@ -1,0 +1,2 @@
+#define QFIT_VERSION_MAJOR 
+#define QFIT_VERSION_MINOR 

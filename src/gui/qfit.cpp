@@ -20,6 +20,9 @@
 
 #include "qfit.h"
 
+#include <fitconfig.h>
+#include <fittools.h>
+
 #include <QtGui/QLabel>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
