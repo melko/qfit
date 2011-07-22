@@ -1,3 +1,0 @@
-#define QFIT_VERSION_MAJOR 0
-#define QFIT_VERSION_MINOR 0
-#define USE_GUI
