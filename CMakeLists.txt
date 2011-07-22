@@ -6,7 +6,7 @@ set(QFIT_VERSION_MAJOR 0)
 set(QFIT_VERSION_MINOR 0)
 set(QFIT_VERSION_PATCH 0)
 
-option(USE_GUI "Build the Qt interface" ON)
+option(USE_GUI "Build the Qt interface" OFF)
 
 add_subdirectory(src)
 
