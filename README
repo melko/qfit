@@ -1,1 +1,33 @@
-A small data analysis software that should do simple tasks like fitting.
+qfit is a small data analysis software that do simple tasks like fitting.
+
+The project is to make a cli and a Qt interface based on FitTools.
+
+#########################
+
+Building qfit (linux)
+-------------------------
+
+cmake allows to build sources in a different folder so that there is no
+mix between sources and blobs.
+In order to build qfit you need at least the GNU Compiler and GNU Make,
+cmake is also needed.
+
+From the sources' dir:
+
+# mkdir build && cd build
+# cmake ..
+# make
+# make install (optional)(needs super-user privileges)
+
+Qt libs are needed to build the Gui
+
+you can state some arguments to cmake to change the defauld behaviour
+
+use
+# cmake -D USE_GUI=OFF
+to not build the Qt interface
+
+#########################
+
+Thanks to the Qt framework, qfit should work also for platforms different
+than linux, but of course these are not supported by me.
