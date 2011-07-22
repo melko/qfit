@@ -24,28 +24,33 @@
 #include <math.h>
 #include <vector>
 
+#define SQUARE(x) (x*x)
+
 using namespace std;
 
 class FitTools
 { 
 
 public:
-  static double mean(vector< double >* data, vector< double >* weight);
-  static double mean(vector< double >* data);
-  static vector<double> vec_product(vector<double> *v1, vector<double> *v2);
+  static double mean(vector< double >& data, vector< double >& weight);
+  static double mean(vector< double >& data);
+  static vector<double> vec_product(vector<double> &v1, vector<double> &v2);
   
   struct LinearFitResult {
     double m, m_error;
     double q, q_error;
     double cov;
+    double chi_square;
   };
   
   struct SlopeFitResult {
     double m, m_error;
+    double chi_square;
   };
   
   struct HorizontalFitResult {
     double q, q_error;
+    double chi_square;
   };
 
   enum FitFunction {
@@ -57,19 +62,32 @@ public:
     LOGARITMIC_FIT
   };
 
-  FitTools(vector<double> *x_array, vector<double> *y_array, vector<double> *errors_array);
-  FitTools(vector<double> *x_array, vector<double> *y_array, double error);
+  FitTools(vector<double> &x_array, vector<double> &y_array, vector<double> &errors_array, FitFunction fit_type);
+  FitTools(vector<double> &x_array, vector<double> &y_array, double error, FitFunction fit_type);
 
+  int Fit(FitFunction type);
+  
 private:  
-  vector<double> xdata;
-  vector<double> ydata;
-  vector<double> yerrors;
-  vector<double> yweights;
-  double sum_weight;
+  vector<double> _xdata;
+  vector<double> _ydata;
+  vector<double> _yerrors;
+  vector<double> _yweights;
+  double _sum_weight;
+  FitFunction _fit_type;
 
-  FitTools::LinearFitResult _fit_linear();
-  FitTools::SlopeFitResult _fit_slope();
-  FitTools::HorizontalFitResult _fit_horizontal();
+  union {
+    LinearFitResult _linear_result;
+    SlopeFitResult _slope_result;
+    HorizontalFitResult _horizontal_result;
+  };
+  
+  int _fit_linear();
+  int _fit_slope();
+  int _fit_horizontal();
+  
+  int _chi_square_linear();
+  int _chi_square_slope();
+  int _chi_square_horizontal();
 };
 
 #endif // FITTOOLS_H
