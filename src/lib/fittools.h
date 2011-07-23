@@ -21,6 +21,8 @@
 #ifndef FITTOOLS_H
 #define FITTOOLS_H
 
+#include "log.h"
+
 #include <math.h>
 #include <vector>
 
@@ -61,25 +63,27 @@ public:
     EXPONENTIAL_FIT,
     LOGARITMIC_FIT
   };
+  
+  union FitResult{
+    LinearFitResult _linear_result;
+    SlopeFitResult _slope_result;
+    HorizontalFitResult _horizontal_result;
+  };
 
   FitTools(vector<double> &x_array, vector<double> &y_array, vector<double> &errors_array, FitFunction fit_type);
   FitTools(vector<double> &x_array, vector<double> &y_array, double error, FitFunction fit_type);
 
-  int Fit(FitFunction type);
+  FitResult Fit();
   
-private:  
+private:
   vector<double> _xdata;
   vector<double> _ydata;
   vector<double> _yerrors;
   vector<double> _yweights;
   double _sum_weight;
+  FitResult _fit_result;
   FitFunction _fit_type;
 
-  union {
-    LinearFitResult _linear_result;
-    SlopeFitResult _slope_result;
-    HorizontalFitResult _horizontal_result;
-  };
   
   int _fit_linear();
   int _fit_slope();

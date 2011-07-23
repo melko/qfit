@@ -31,7 +31,7 @@ FitTools::FitTools(std::vector< double >& x_array, std::vector< double >& y_arra
   _yerrors = vector<double>(y_array.size(), error);
 }
 
-void * FitTools::Fit()
+FitTools::FitResult FitTools::Fit()
 {
   switch(_fit_type){
     case LINEAR_FIT:
@@ -49,7 +49,7 @@ void * FitTools::Fit()
       break;
   }
   
-  return 0;
+  return _fit_result;
 }
 
 
@@ -64,11 +64,11 @@ int FitTools::_fit_linear()
   xy_mean = mean(xy, _yweights);
   x2_mean = mean(x2, _yweights);
   
-  _linear_result.m = (xy_mean - x_mean*y_mean)/(x2_mean - x_mean*x_mean);
-  _linear_result.m_error = 1/sqrt((x2_mean - x_mean*x_mean)*_sum_weight);
-  _linear_result.q = (x2_mean*y_mean - x_mean*xy_mean)/(x2_mean - x_mean*x_mean);
-  _linear_result.q_error = _linear_result.m_error*sqrt(x2_mean);
-  _linear_result.cov = -x_mean/((x2_mean - x_mean*x_mean)*_sum_weight);
+  _fit_result._linear_result.m = (xy_mean - x_mean*y_mean)/(x2_mean - x_mean*x_mean);
+  _fit_result._linear_result.m_error = 1/sqrt((x2_mean - x_mean*x_mean)*_sum_weight);
+  _fit_result._linear_result.q = (x2_mean*y_mean - x_mean*xy_mean)/(x2_mean - x_mean*x_mean);
+  _fit_result._linear_result.q_error = _fit_result._linear_result.m_error*sqrt(x2_mean);
+  _fit_result._linear_result.cov = -x_mean/((x2_mean - x_mean*x_mean)*_sum_weight);
   
   this->_fit_type = LINEAR_FIT;
   return 0;
@@ -121,10 +121,10 @@ vector< double > FitTools::vec_product(std::vector< double >& v1, std::vector< d
 
 int FitTools::_chi_square_linear()
 {
-  _linear_result.chi_square = 0;
+  _fit_result._linear_result.chi_square = 0;
   
   for(int i=0;i<(int)_xdata.size();i++){
-    _linear_result.chi_square += SQUARE((_ydata.at(i) - _linear_result.m * _xdata.at(i) - _linear_result.q)/_yerrors.at(i));
+    _fit_result._linear_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._linear_result.m * _xdata.at(i) - _fit_result._linear_result.q)/_yerrors.at(i));
   }
   
   return 0;
@@ -132,10 +132,10 @@ int FitTools::_chi_square_linear()
 
 int FitTools::_chi_square_slope()
 {
-  _slope_result.chi_square = 0;
+  _fit_result._slope_result.chi_square = 0;
   
   for(int i=0;i<(int)_xdata.size();i++){
-    _slope_result.chi_square += SQUARE((_ydata.at(i) - _slope_result.m * _xdata.at(i))/_yerrors.at(i));
+    _fit_result._slope_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._slope_result.m * _xdata.at(i))/_yerrors.at(i));
   }
   
   return 0;
@@ -143,12 +143,12 @@ int FitTools::_chi_square_slope()
 
 int FitTools::_chi_square_horizontal()
 {
-  _horizontal_result.chi_square = 0;
+  _fit_result._horizontal_result.chi_square = 0;
   
   for(int i=0;i<(int)_xdata.size();i++){
-    _horizontal_result.chi_square += SQUARE((_ydata.at(i) - _horizontal_result.q)/_yerrors.at(i));
+    _fit_result._horizontal_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._horizontal_result.q)/_yerrors.at(i));
   }
-  
+
   return 0;
 }
 
