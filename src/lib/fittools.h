@@ -34,9 +34,9 @@ class FitTools
 { 
 
 public:
-  static double mean(vector< double >& data, vector< double >& weight);
-  static double mean(vector< double >& data);
-  static vector<double> vec_product(vector<double> &v1, vector<double> &v2);
+  static inline double mean(const std::vector< double >& data, const std::vector< double >& weight);
+  static inline double mean(const std::vector< double >& data);
+  static inline vector<double> vector_product(const vector<double> &v1, const vector<double> &v2);
   
   struct LinearFitResult {
     double m, m_error;
@@ -89,9 +89,9 @@ private:
   int _fit_slope();
   int _fit_horizontal();
   
-  int _chi_square_linear();
-  int _chi_square_slope();
-  int _chi_square_horizontal();
+  inline int _chi_square_linear();
+  inline int _chi_square_slope();
+  inline int _chi_square_horizontal();
 };
 
 #endif // FITTOOLS_H

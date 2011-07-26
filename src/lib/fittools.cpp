@@ -36,12 +36,15 @@ FitTools::FitResult FitTools::Fit()
   switch(_fit_type){
     case LINEAR_FIT:
       _fit_linear();
+      _chi_square_linear();
       break;
     case SLOPE_FIT:
       _fit_slope();
+      _chi_square_slope();
       break;
     case HORIZONTAL_FIT:
       _fit_horizontal();
+      _chi_square_horizontal();
       break;
     case PARABOLIC_FIT: //TODO
     case EXPONENTIAL_FIT:
@@ -52,12 +55,11 @@ FitTools::FitResult FitTools::Fit()
   return _fit_result;
 }
 
-
 int FitTools::_fit_linear()
 {
   double x_mean, y_mean, xy_mean, x2_mean;
-  vector<double> x2 = vec_product(_xdata, _xdata);
-  vector<double> xy = vec_product(_xdata, _ydata);
+  vector<double> x2 = vector_product(_xdata, _xdata);
+  vector<double> xy = vector_product(_xdata, _ydata);
   
   x_mean = mean(_xdata, _yweights);
   y_mean = mean(_ydata, _yweights);
@@ -86,7 +88,7 @@ int FitTools::_fit_horizontal()
   return 0;
 }
 
-double FitTools::mean(std::vector< double >& data, std::vector< double >& weight)
+double FitTools::mean(const std::vector< double >& data, const std::vector< double >& weight)
 {
   double result = 0, sum_weight = 0;
   for(int i=0;i<(int)data.size();i++){
@@ -98,7 +100,7 @@ double FitTools::mean(std::vector< double >& data, std::vector< double >& weight
 
 }
 
-double FitTools::mean(std::vector< double >& data)
+double FitTools::mean(const std::vector< double >& data)
 {
   double result = 0;
   for(int i=0;i<(int)data.size();i++){
@@ -108,7 +110,7 @@ double FitTools::mean(std::vector< double >& data)
   return result/data.size();
 }
 
-vector< double > FitTools::vec_product(std::vector< double >& v1, std::vector< double >& v2)
+vector< double > FitTools::vector_product(const std::vector< double >& v1, const std::vector< double >& v2)
 {
   vector<double> result(v1.size());
   
@@ -119,7 +121,7 @@ vector< double > FitTools::vec_product(std::vector< double >& v1, std::vector< d
 
 }
 
-int FitTools::_chi_square_linear()
+inline int FitTools::_chi_square_linear()
 {
   _fit_result._linear_result.chi_square = 0;
   
@@ -130,7 +132,7 @@ int FitTools::_chi_square_linear()
   return 0;
 }
 
-int FitTools::_chi_square_slope()
+inline int FitTools::_chi_square_slope()
 {
   _fit_result._slope_result.chi_square = 0;
   
@@ -141,7 +143,7 @@ int FitTools::_chi_square_slope()
   return 0;
 }
 
-int FitTools::_chi_square_horizontal()
+inline int FitTools::_chi_square_horizontal()
 {
   _fit_result._horizontal_result.chi_square = 0;
   
