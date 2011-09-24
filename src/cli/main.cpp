@@ -19,6 +19,7 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include <cstring>
 #include <vector>
 
@@ -99,7 +100,8 @@ int print_result(FitTools::FitResult fit_result, FitTools::FitFunction fit_type)
 {
   switch(fit_type){
     case FitTools::LINEAR_FIT:
-      cout << "m = " << fit_result._linear_result.m << "\ts(m) = " << fit_result._linear_result.m_error << endl
+      cout << setiosflags(ios::scientific)
+           << "m = " << fit_result._linear_result.m << "\ts(m) = " << fit_result._linear_result.m_error << endl
            << "q = " << fit_result._linear_result.q << "\ts(q) = " << fit_result._linear_result.q_error << endl
            << "cov(m,q) = " << fit_result._linear_result.cov << endl
            << "X² = " << fit_result._linear_result.chi_square << endl;
