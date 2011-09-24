@@ -19,29 +19,120 @@
  */
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstring>
+#include <string>
+#include <vector>
 
 #include "fittools.h"
 
 using namespace std;
 
+int display_usage();
+int print_result(FitTools::FitResult fit_result, FitTools::FitFunction fit_type);
+
 int main(int argc, char** argv)
 {
-  bool error = true;
-  
-  if(argc)
+  char* file_path = NULL;
+  double error = -1;
+  FitTools::FitFunction fit_type = FitTools::LINEAR_FIT;
 
-  for (int i=0;i<argc;i++){
-    if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){
-//       display_usage();
-      return(0);
-    }
-    if(strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--no-errors") == 0)
-      error = false;
-    
+  if(argc<2){
+    display_usage();
+    return(-1);
   }
+
+  /* scorrimento dei parametri */
+  for (int i=1;i<argc;i++){
+    if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
+      return(display_usage());
+    else if(strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--error") == 0){
+      stringstream tmp(argv[1+i++]);
+      tmp >> error;
+      if(error<=0){
+	cout << "Inserito un errore non valido!\n";
+	return(-3);
+      }
+    }
+    else if(strcmp(argv[i], "-li") == 0 || strcmp(argv[i], "--linear") == 0)
+      fit_type = FitTools::LINEAR_FIT;
+    else if(strcmp(argv[i], "-sl") == 0 || strcmp(argv[i], "--slope") == 0)
+      fit_type = FitTools::SLOPE_FIT;
+    else if(strcmp(argv[i], "-ho") == 0 || strcmp(argv[i], "--horizontal") == 0)
+      fit_type = FitTools::HORIZONTAL_FIT;
+    else if(strcmp(argv[i], "-ex") == 0 || strcmp(argv[i], "--exponential") == 0)
+      fit_type = FitTools::EXPONENTIAL_FIT;
+    else if(strcmp(argv[i], "-lo") == 0 || strcmp(argv[i], "--logaritmic") == 0)
+      fit_type = FitTools::LOGARITMIC_FIT;
+    else
+      file_path = argv[i];
+  }
+
+  if(file_path == NULL)
+    return(display_usage());
   
-  cout << "Hello World!" << endl;
+  ifstream file(file_path);
+  if(!file.is_open()){
+    cout << "Errore nell'apertura del file\n";
+    return(-2);
+  }
+
+  vector<double> xdata, ydata, yerrors;
+  string line;
+  while(getline(file, line)){	/* read data from file */
+    stringstream tmp(line);
+    double num;
+    
+    tmp >> num;
+    xdata.push_back(num);
+    
+    tmp >> num;
+    ydata.push_back(num);
+    
+    if(error < 0){
+      tmp >> num;
+      yerrors.push_back(num);
+    }
+  }
+  file.close();
+  
+  fit_type = FitTools::LINEAR_FIT; //TODO remove this after implementing other fit methods
+  /* start fittools */
+  FitTools *fit;
+  if(error<0){
+    fit = new FitTools(xdata, ydata, yerrors, fit_type);
+  }
+  else{
+    fit = new FitTools(xdata, ydata, error, fit_type);
+  }
+  FitTools::FitResult result = fit->Fit();
+  print_result(result, fit_type);
+  return 0;
+}
+
+int display_usage()
+{
+  cout << "Display "
+       << "usage\n";
+  return -1;
+}
+
+int print_result(FitTools::FitResult fit_result, FitTools::FitFunction fit_type)
+{
+  switch(fit_type){
+    case FitTools::LINEAR_FIT:
+      cout << "m = " << fit_result._linear_result.m << "\ts(m) = " << fit_result._linear_result.m_error << endl
+           << "q = " << fit_result._linear_result.q << "\ts(q) = " << fit_result._linear_result.q_error << endl
+           << "cov(m,q) = " << fit_result._linear_result.cov << endl
+           << "X² = " << fit_result._linear_result.chi_square << endl;
+      break;
+    case FitTools::SLOPE_FIT: //TODO
+    case FitTools::HORIZONTAL_FIT:
+    case FitTools::EXPONENTIAL_FIT:
+    case FitTools::LOGARITMIC_FIT:
+      break;
+  }
   return 0;
 }
 

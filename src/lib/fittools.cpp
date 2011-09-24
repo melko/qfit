@@ -22,17 +22,40 @@
 
 FitTools::FitTools(std::vector< double >& x_array, std::vector< double >& y_array, std::vector< double >& errors_array, FitTools::FitFunction fit_type)
 {
-  //TODO
+  _xdata = x_array;
+  _ydata = y_array;
+  _yerrors = errors_array;
+  _fit_type = fit_type;
+  _sum_weight = 0;
 }
 
 FitTools::FitTools(std::vector< double >& x_array, std::vector< double >& y_array, double error, FitTools::FitFunction fit_type)
 {
-  //TODO
+  _xdata = x_array;
+  _ydata = y_array;
   _yerrors = vector<double>(y_array.size(), error);
+  _fit_type = fit_type;
+  _sum_weight = 0;
 }
 
+int FitTools::_prepare_fit()
+{
+  _sum_weight = 0;
+  for(int i=0;i<(int)_ydata.size();i++){
+    _yweights.push_back(SQUARE(1.0/_yerrors.at(i)));
+    _sum_weight += _yweights.at(i);
+  }
+  
+  return 0;
+}
+
+/*
+ * chiama la funzione di fit appropriata a seconda della variabile _fit_type
+*/ 
 FitTools::FitResult FitTools::Fit()
 {
+  _prepare_fit();
+  
   switch(_fit_type){
     case LINEAR_FIT:
       _fit_linear();
@@ -46,15 +69,17 @@ FitTools::FitResult FitTools::Fit()
       _fit_horizontal();
       _chi_square_horizontal();
       break;
-    case PARABOLIC_FIT: //TODO
-    case EXPONENTIAL_FIT:
-    case LOGARITMIC_FIT:
+    case EXPONENTIAL_FIT: //TODO
+    case LOGARITMIC_FIT: //TODO
       break;
   }
   
   return _fit_result;
 }
 
+/*
+ * fit lineare
+*/
 int FitTools::_fit_linear()
 {
   double x_mean, y_mean, xy_mean, x2_mean;
@@ -76,30 +101,43 @@ int FitTools::_fit_linear()
   return 0;
 }
 
+/*
+ * fit lineare solo pendenza
+*/
 int FitTools::_fit_slope()
 {
   //TODO
   return 0;
 }
 
+/*
+ * fit lineare solo altezza
+*/
 int FitTools::_fit_horizontal()
 {
   //TODO
   return 0;
 }
 
-double FitTools::mean(const std::vector< double >& data, const std::vector< double >& weight)
+/*
+ * calcola la media pesata di un vettore
+*/
+double FitTools::mean(const std::vector< double >& data,	/* vettore di cui calcolare la media */
+		      const std::vector< double >& weight)	/* vettore dei pesi */
 {
   double result = 0, sum_weight = 0;
   for(int i=0;i<(int)data.size();i++){
     result += data.at(i)*weight.at(i);
     sum_weight += weight.at(i);
   }
-  
+
   return result/sum_weight;
 
 }
 
+/*
+ * calcola la media aritmetica di un vettore
+*/
 double FitTools::mean(const std::vector< double >& data)
 {
   double result = 0;
@@ -110,17 +148,24 @@ double FitTools::mean(const std::vector< double >& data)
   return result/data.size();
 }
 
+/*
+ * calcola un vettore le cui componenti sono il prodotto delle componenti dei
+ * vettori in entrata
+*/
 vector< double > FitTools::vector_product(const std::vector< double >& v1, const std::vector< double >& v2)
 {
   vector<double> result(v1.size());
   
   for(int i=0;i<(int)v1.size();i++)
     result.at(i) = v1.at(i)*v2.at(i);
-  
+
   return result;
 
 }
 
+/*
+ * calcola il chi quadro su un'aspettativa lineare
+*/
 inline int FitTools::_chi_square_linear()
 {
   _fit_result._linear_result.chi_square = 0;
@@ -132,6 +177,9 @@ inline int FitTools::_chi_square_linear()
   return 0;
 }
 
+/*
+ * calcola il chi quadro su un'aspettativa lineare solo pendenza
+*/
 inline int FitTools::_chi_square_slope()
 {
   _fit_result._slope_result.chi_square = 0;
@@ -143,6 +191,9 @@ inline int FitTools::_chi_square_slope()
   return 0;
 }
 
+/*
+ * calcola il chi quadro su un'aspettativa lineare solo altezza
+*/
 inline int FitTools::_chi_square_horizontal()
 {
   _fit_result._horizontal_result.chi_square = 0;

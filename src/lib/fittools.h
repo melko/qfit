@@ -59,7 +59,6 @@ public:
     LINEAR_FIT,
     SLOPE_FIT,
     HORIZONTAL_FIT,
-    PARABOLIC_FIT,
     EXPONENTIAL_FIT,
     LOGARITMIC_FIT
   };
@@ -85,6 +84,7 @@ private:
   FitFunction _fit_type;
 
   
+  int _prepare_fit();
   int _fit_linear();
   int _fit_slope();
   int _fit_horizontal();
