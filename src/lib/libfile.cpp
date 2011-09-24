@@ -19,4 +19,38 @@
 
 
 #include "libfile.h"
+#include <stdlib.h>
 
+int Data::ReadFile(char* path,				/* percorso del file */
+		   vector< double >& xdata,
+		   vector< double >& ydata, 
+		   vector< double >& yerrors, 
+		   double err)				/* true == array yerrors */
+{
+  ifstream file(path);
+  
+  if(!file.is_open()){
+    cout << "Errore nell'apertura del file\n";
+    exit(-2);
+  }
+  
+  string line;
+  while(getline(file, line)){
+    stringstream str(line);
+    double tmp;
+    
+    str >> tmp;
+    xdata.push_back(tmp);
+    
+    str >> tmp;
+    ydata.push_back(tmp);
+    
+    if(err < 0){
+      str >> tmp;
+      yerrors.push_back(tmp);
+    }
+  }
+  
+  file.close();
+
+}

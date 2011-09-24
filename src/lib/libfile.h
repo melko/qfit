@@ -22,17 +22,17 @@
 #define LIBFILE_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
 class Data
 {
 public:
-  Data(char* str, bool err);
-private:
-  char* path;
-  bool error;
+  static int ReadFile(char* path, std::vector< double >& xdata, std::vector< double >& ydata, std::vector< double >& yerrors, double err);
 };
 
 #endif // LIBFILE_H

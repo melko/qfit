@@ -19,13 +19,11 @@
  */
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <cstring>
-#include <string>
 #include <vector>
 
 #include "fittools.h"
+#include "libfile.h"
 
 using namespace std;
 
@@ -72,32 +70,11 @@ int main(int argc, char** argv)
   if(file_path == NULL)
     return(display_usage());
   
-  ifstream file(file_path);
-  if(!file.is_open()){
-    cout << "Errore nell'apertura del file\n";
-    return(-2);
-  }
-
   vector<double> xdata, ydata, yerrors;
-  string line;
-  while(getline(file, line)){	/* read data from file */
-    stringstream tmp(line);
-    double num;
-    
-    tmp >> num;
-    xdata.push_back(num);
-    
-    tmp >> num;
-    ydata.push_back(num);
-    
-    if(error < 0){
-      tmp >> num;
-      yerrors.push_back(num);
-    }
-  }
-  file.close();
+  Data::ReadFile(file_path, xdata, ydata, yerrors, error);
   
   fit_type = FitTools::LINEAR_FIT; //TODO remove this after implementing other fit methods
+
   /* start fittools */
   FitTools *fit;
   if(error<0){

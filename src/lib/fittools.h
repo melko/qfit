@@ -34,8 +34,8 @@ class FitTools
 { 
 
 public:
-  static inline double mean(const std::vector< double >& data, const std::vector< double >& weight);
-  static inline double mean(const std::vector< double >& data);
+  static inline double mean(const std::vector<double>& data, const std::vector<double>& weight);
+  static inline double mean(const std::vector<double>& data);
   static inline vector<double> vector_product(const vector<double> &v1, const vector<double> &v2);
   
   struct LinearFitResult {
