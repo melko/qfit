@@ -26,7 +26,7 @@
 #include <math.h>
 #include <vector>
 
-#define SQUARE(x) (x*x)
+#define SQUARE(x) (x)*(x)
 
 using namespace std;
 
