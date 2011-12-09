@@ -17,7 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "libfile.h"
 #include <stdlib.h>
 
@@ -37,6 +36,11 @@ int Data::ReadFile(char* path,				/* percorso del file */
   string line;
   while(getline(file, line)){
     stringstream str(line);
+
+    // allow comments in the data file
+    if(line[0] == '#')
+	    continue;
+
     double tmp;
     
     str >> tmp;
