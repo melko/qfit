@@ -14,9 +14,9 @@ cmake is also needed.
 
 From the sources' dir:
 
-# mkdir build && cd build
-# cmake ..
-# make
+$ mkdir build && cd build
+$ cmake ..
+$ make
 # make install (optional)(needs super-user privileges)
 
 Qt libs are needed to build the Gui
@@ -24,7 +24,7 @@ Qt libs are needed to build the Gui
 you can state some arguments to cmake to change the defauld behaviour
 
 use
-# cmake -D USE_GUI=OFF
+$ cmake -D USE_GUI=OFF
 to not build the Qt interface
 
 #########################
