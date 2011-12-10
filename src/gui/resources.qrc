@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>resources/print-printer.png</file>
+    <file>resources/trash.png</file>
+    <file>resources/go-3.png</file>
+    <file>resources/folder-open-2.png</file>
+  </qresource>
+</RCC>

@@ -8,7 +8,7 @@ set(QFIT_VERSION_PATCH 0)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g")
 
-option(USE_GUI "Build the Qt interface" OFF)
+option(USE_GUI "Build the Qt interface" ON)
 
 add_subdirectory(src)
 

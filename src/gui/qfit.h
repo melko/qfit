@@ -21,14 +21,28 @@
 #ifndef qfit_H
 #define qfit_H
 
-#include <QtGui/QMainWindow>
+#include <fittools.h>
 
-class qfit : public QMainWindow
+#include <QString>
+#include <QtGui/QWidget>
+#include "ui_maindialog.h"
+
+class qfit : public QWidget, private Ui_Maindialog
 {
 Q_OBJECT
 public:
   qfit();
   virtual ~qfit();
+  int printResult(FitTools* fit);
+public slots:
+  void appendLog(const char* c);
+  void changeFitType(int state);
+  void startFitClicked();
+  void toggleCustomError(int);
+  void openFile();
+  void cleanLog();
+private:
+  FitTools::FitFunction fit_type;
 };
 
 #endif // qfit_H

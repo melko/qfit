@@ -1,11 +1,21 @@
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
 
 find_package(Qt4 REQUIRED)
+find_package(Qwt5 REQUIRED)
+
+include_directories(${QT_INCLUDES} ${Qwt5_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(qfit_SRCS qfit.cpp main.cpp)
 qt4_automoc(${qfit_SRCS})
+
+set(qfit_ui maindialog.ui)
+qt4_wrap_ui(qfit_SRCS ${qfit_ui})
+
+set(qfit_resources resources.qrc)
+qt4_add_resources(qfit_SRCS ${qfit_resources})
+
 add_executable(qfit ${qfit_SRCS})
 
-target_link_libraries(qfit ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} fit)
+target_link_libraries(qfit ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${Qwt5_Qt4_LIBRARY} fit)
 
 install(TARGETS qfit DESTINATION bin)
