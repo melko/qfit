@@ -29,7 +29,6 @@
 using namespace std;
 
 int display_usage();
-int print_result(FitTools::FitResult fit_result, FitTools::FitFunction fit_type);
 
 int main(int argc, char** argv)
 {
@@ -72,20 +71,21 @@ int main(int argc, char** argv)
     return(display_usage());
   
   vector<double> xdata, ydata, yerrors;
-  Data::ReadFile(file_path, xdata, ydata, yerrors, error);
+  if(Data::ReadFile(file_path, xdata, ydata, yerrors, error))
+    return(-2);
   
   fit_type = FitTools::LINEAR_FIT; //TODO remove this after implementing other fit methods
 
   /* start fittools */
   FitTools *fit;
-  if(error<0){
+  if(error<=0){
     fit = new FitTools(xdata, ydata, yerrors, fit_type);
   }
   else{
     fit = new FitTools(xdata, ydata, error, fit_type);
   }
-  FitTools::FitResult result = fit->Fit();
-  print_result(result, fit_type);
+  fit->Fit();
+  fit->printResult(cout);
   return 0;
 }
 
@@ -94,25 +94,6 @@ int display_usage()
   cout << "Display "
        << "usage\n";
   return -1;
-}
-
-int print_result(FitTools::FitResult fit_result, FitTools::FitFunction fit_type)
-{
-  switch(fit_type){
-    case FitTools::LINEAR_FIT:
-      cout << setiosflags(ios::scientific)
-           << "m = " << fit_result._linear_result.m << "\ts(m) = " << fit_result._linear_result.m_error << endl
-           << "q = " << fit_result._linear_result.q << "\ts(q) = " << fit_result._linear_result.q_error << endl
-           << "cov(m,q) = " << fit_result._linear_result.cov << endl
-           << "X² = " << fit_result._linear_result.chi_square << endl;
-      break;
-    case FitTools::SLOPE_FIT: //TODO
-    case FitTools::HORIZONTAL_FIT:
-    case FitTools::EXPONENTIAL_FIT:
-    case FitTools::LOGARITMIC_FIT:
-      break;
-  }
-  return 0;
 }
 
 /* vim: set ts=2 sw=2 et: */
