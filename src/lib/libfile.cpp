@@ -29,8 +29,8 @@ int Data::ReadFile(char* path,				/* percorso del file */
   ifstream file(path);
   
   if(!file.is_open()){
-    cout << "Errore nell'apertura del file\n";
-    exit(-2);
+    cerr << "Errore nell'apertura del file\n";
+    return(-2);
   }
   
   string line;
@@ -38,7 +38,7 @@ int Data::ReadFile(char* path,				/* percorso del file */
     stringstream str(line);
 
     // allow comments in the data file
-    if(line[0] == '#')
+    if(!isdigit(line[0]))
 	    continue;
 
     double tmp;
@@ -56,5 +56,5 @@ int Data::ReadFile(char* path,				/* percorso del file */
   }
   
   file.close();
-
+  return(0);
 }
