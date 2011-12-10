@@ -55,8 +55,10 @@ public:
     double chi_square;
   };
 
+  //TODO exponential and logaritmic result
+
   enum FitFunction {
-    LINEAR_FIT,
+    LINEAR_FIT=0,
     SLOPE_FIT,
     HORIZONTAL_FIT,
     EXPONENTIAL_FIT,
@@ -69,9 +71,13 @@ public:
     HorizontalFitResult _horizontal_result;
   };
 
+  LinearFitResult getLinearResult();
+  SlopeFitResult getSlopeResult();
+  HorizontalFitResult getHorizontalResult();
   FitTools(vector<double> &x_array, vector<double> &y_array, vector<double> &errors_array, FitFunction fit_type);
   FitTools(vector<double> &x_array, vector<double> &y_array, double error, FitFunction fit_type);
 
+  int printResult(ostream& sout);
   FitResult Fit();
   
 private:
@@ -92,6 +98,9 @@ private:
   inline int _chi_square_linear();
   inline int _chi_square_slope();
   inline int _chi_square_horizontal();
+  int _print_linear(ostream& sout);
+  int _print_slope(ostream& sout);
+  int _print_horizontal(ostream& sout); //TODO print exp and log
 };
 
 #endif // FITTOOLS_H

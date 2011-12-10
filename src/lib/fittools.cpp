@@ -119,6 +119,36 @@ int FitTools::_fit_horizontal()
   return 0;
 }
 
+FitTools::LinearFitResult FitTools::getLinearResult()
+{
+  LinearFitResult ris;
+  ris.m = _fit_result._linear_result.m;
+  ris.m_error = _fit_result._linear_result.m_error;
+  ris.q = _fit_result._linear_result.q;
+  ris.q_error = _fit_result._linear_result.q_error;
+  ris.cov = _fit_result._linear_result.cov;
+  ris.chi_square = _fit_result._linear_result.chi_square;
+  return ris;
+}
+
+FitTools::SlopeFitResult FitTools::getSlopeResult()
+{
+  SlopeFitResult ris;
+  ris.m = _fit_result._slope_result.m;
+  ris.m_error = _fit_result._slope_result.m_error;
+  ris.chi_square = _fit_result._slope_result.chi_square;
+  return ris;
+}
+
+FitTools::HorizontalFitResult FitTools::getHorizontalResult()
+{
+  HorizontalFitResult ris;
+  ris.q = _fit_result._horizontal_result.q;
+  ris.q_error = _fit_result._horizontal_result.q_error;
+  ris.chi_square = _fit_result._horizontal_result.chi_square;
+  return ris;
+}
+
 /*
  * calcola la media pesata di un vettore
 */
@@ -205,5 +235,48 @@ inline int FitTools::_chi_square_horizontal()
   return 0;
 }
 
+int FitTools::printResult(ostream& sout)
+{
+  switch(_fit_type){
+    case FitTools::LINEAR_FIT:
+      _print_linear(sout);
+      break;
+    case FitTools::SLOPE_FIT:
+      _print_slope(sout);
+    case FitTools::HORIZONTAL_FIT:
+      _print_horizontal(sout);
+    case FitTools::EXPONENTIAL_FIT: //TODO
+    case FitTools::LOGARITMIC_FIT:
+      return 0;
+      break;
+  }
+  return 0;
+}
+
+int FitTools::_print_linear(ostream& sout)
+{
+  sout << scientific
+       << "m = " << _fit_result._linear_result.m << "\ts(m) = " << _fit_result._linear_result.m_error << endl
+       << "q = " << _fit_result._linear_result.q << "\ts(q) = " << _fit_result._linear_result.q_error << endl
+       << "cov(m,q) = " << _fit_result._linear_result.cov << endl
+       << "X² = " << _fit_result._linear_result.chi_square << endl;
+       return 0;
+}
+
+int FitTools::_print_slope(ostream& sout)
+{
+  sout << scientific
+       << "m = " << _fit_result._slope_result.m << "\ts(m) = " << _fit_result._slope_result.m_error << endl
+       << "X2 = " << _fit_result._slope_result.chi_square << endl;
+       return 0;
+}
+
+int FitTools::_print_horizontal(ostream& sout)
+{
+  sout << scientific
+       << "q = " << _fit_result._horizontal_result.q << "\ts(q) = " << _fit_result._horizontal_result.q_error << endl
+       << "X2 = " << _fit_result._horizontal_result.chi_square << endl;
+       return 0;
+}
 
 /* vim: set ts=2 sw=2 et: */
