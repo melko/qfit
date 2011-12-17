@@ -136,6 +136,7 @@ void qfit::startFitClicked()
     fit = new FitTools(xdata, ydata, error, fit_type);
   fit->Fit();
   printResult(fit);
+  delete fit;
 }
 
 void qfit::appendLog(const char* c)
