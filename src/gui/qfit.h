@@ -25,6 +25,10 @@
 
 #include <QString>
 #include <QtGui/QWidget>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_intervalcurve.h>
+#include <qwt_interval_symbol.h>
+#include <qwt_symbol.h>
 #include "ui_maindialog.h"
 
 class qfit : public QWidget, private Ui_Maindialog
@@ -33,7 +37,8 @@ Q_OBJECT
 public:
   qfit();
   virtual ~qfit();
-  int printResult(FitTools* fit);
+  int printResult();
+  int plotData();
 public slots:
   void appendLog(const char* c);
   void changeFitType(int state);
@@ -42,7 +47,15 @@ public slots:
   void openFile();
   void cleanLog();
 private:
+  vector<double> xdata;
+  vector<double> ydata;
+  vector<double> yerrors;
+  FitTools *fit;
   FitTools::FitFunction fit_type;
+  QwtPlotCurve *data_plot;
+  QwtPlotIntervalCurve *range_plot;
+  QwtPlotCurve *model_plot;
+  int plotLinearData();
 };
 
 #endif // qfit_H

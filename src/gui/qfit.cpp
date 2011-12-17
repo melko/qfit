@@ -34,6 +34,10 @@
 qfit::qfit()
 {
   fit_type = FitTools::LINEAR_FIT;
+  data_plot = NULL;
+  range_plot = NULL;
+  model_plot = NULL;
+  fit = NULL;
 
   setupUi(this);
   selectFit->addItem(tr("Fit Lineare"));/*TODO add once are available in FitTools
@@ -41,19 +45,15 @@ qfit::qfit()
   selectFit->addItem(tr("Fit Orizzontale"));
   selectFit->addItem(tr("Fit Esponenziale"));
   selectFit->addItem(tr("Fit Logaritmico"));*/
+  
+//   qwtPlot->setAxisTitle(QwtPlot::xBottom, "x");
+//   qwtPlot->setAxisTitle(QwtPlot::yLeft, "y");
 
   connect(openFileButton, SIGNAL(clicked(bool)), this, SLOT(openFile()));
   connect(customError, SIGNAL(stateChanged(int)), this, SLOT(toggleCustomError(int)));
   connect(startFit, SIGNAL(clicked(bool)), this, SLOT(startFitClicked()));
   connect(selectFit, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFitType(int)));
   connect(cleanLogButton, SIGNAL(clicked(bool)), this, SLOT(cleanLog()));
-//   QLabel* l = new QLabel( this );
-//   l->setText( "Hello World!" );
-//   setCentralWidget( l );
-//   QAction* a = new QAction(this);
-//   a->setText( "Quit" );
-//   connect(a, SIGNAL(triggered()), SLOT(close()) );
-//   menuBar()->addMenu( "File" )->addAction( a );
 }
 
 qfit::~qfit()
@@ -122,29 +122,92 @@ void qfit::startFitClicked()
     }
   }
 
-  vector<double> xdata, ydata, yerrors;
   if(Data::ReadFile(filePath->text().toLatin1().data(), xdata, ydata, yerrors, error)){
     appendLog("Errore nell'apertura del file");
     return;
   }
 
   // start fittools
-  FitTools *fit;
+  delete fit;
   if(error<=0)
     fit = new FitTools(xdata, ydata, yerrors, fit_type);
   else
     fit = new FitTools(xdata, ydata, error, fit_type);
   fit->Fit();
-  printResult(fit);
-  delete fit;
+  printResult();
+  
+  plotData();
 }
+
+int qfit::plotData()
+{
+  delete data_plot;
+  delete range_plot;
+  delete model_plot;
+  
+  switch(fit_type){
+    case FitTools::LINEAR_FIT:
+      return plotLinearData();
+      break;
+      //TODO fare gli altri casi
+    case FitTools::EXPONENTIAL_FIT:
+    case FitTools::LOGARITMIC_FIT:
+      return(1);
+      break;
+  }
+}
+
+
+int qfit::plotLinearData()
+{
+  /* standard data */
+  data_plot = new QwtPlotCurve("data");
+  data_plot->setSamples(&xdata.at(0), &ydata.at(0), xdata.size());
+  data_plot->setSymbol(new QwtSymbol(QwtSymbol::XCross, Qt::NoBrush, QPen(Qt::white), QSize(8,8)));
+  data_plot->setStyle(QwtPlotCurve::NoCurve);
+  data_plot->setRenderHint(QwtPlotItem::RenderAntialiased);
+  
+  /* error bars */
+  range_plot = new QwtPlotIntervalCurve("range");
+  
+  QVector<QwtIntervalSample> range(xdata.size());
+  for(int i=0;i<(int)xdata.size();i++){
+    range[i] = QwtIntervalSample(xdata.at(i), ydata.at(i)-yerrors.at(i), ydata.at(i)+yerrors.at(i));
+  }
+  
+  QwtIntervalSymbol *errorbar = new QwtIntervalSymbol(QwtIntervalSymbol::Bar);
+  errorbar->setPen(QPen(Qt::white, 1));
+  range_plot->setSamples(range);
+  range_plot->setSymbol(errorbar);
+  range_plot->setStyle(QwtPlotIntervalCurve::NoCurve);
+  
+  /* model */
+  FitTools::LinearFitResult tmp = fit->getLinearResult();
+  double x[2], y[2];
+  x[0] = xdata.at(0);
+  x[1] = xdata.back();
+  y[0] = tmp.m*x[0] + tmp.q;
+  y[1] = tmp.m*x[1] + tmp.q;
+  
+  model_plot = new QwtPlotCurve("y=mx+q");
+  model_plot->setSamples(x, y, 2);
+  model_plot->setPen(QPen(Qt::red, 1));
+  model_plot->setRenderHint(QwtPlotItem::RenderAntialiased);
+  
+  data_plot->attach(qwtPlot);
+  range_plot->attach(qwtPlot);
+  model_plot->attach(qwtPlot);
+  qwtPlot->replot();
+  return(0);
+}
+
 
 void qfit::appendLog(const char* c)
 {
   logOutput->appendPlainText(trUtf8(c));
 }
 
-int qfit::printResult(FitTools *fit)
+int qfit::printResult()
 {
   stringstream sout;
   fit->printResult(sout);
