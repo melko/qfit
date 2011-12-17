@@ -33,6 +33,10 @@ int Data::ReadFile(char* path,				/* percorso del file */
     return(-2);
   }
   
+  xdata.clear();
+  ydata.clear();
+  yerrors.clear();
+  
   string line;
   while(getline(file, line)){
     stringstream str(line);
@@ -53,6 +57,8 @@ int Data::ReadFile(char* path,				/* percorso del file */
       str >> tmp;
       yerrors.push_back(tmp);
     }
+    else
+      yerrors.push_back(err);
   }
   
   file.close();
