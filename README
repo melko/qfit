@@ -1,4 +1,4 @@
-qfit is a small data analysis software that do fits.
+qfit is a small data analysis software that can do fits.
 
 The project is to make a cli and a Qt interface based on FitTools.
 
@@ -19,8 +19,8 @@ $ cmake ..
 $ make
 # make install (optional)(needs super-user privileges)
 
-Qt libs are needed to build the Gui, if you want also the plot widget, also
-the Qwt libs are needed (you need at least Qwt6, Qwt5 won't fit).
+Qt libs are needed to build the Gui, if you want the plot widget, also
+the Qwt libs are needed (you need at least Qwt6, Qwt5 won't work).
 
 you can state some arguments to cmake to change the default behaviour
 
@@ -30,8 +30,19 @@ to not build the Qt interface
 
 *WARNING*
 A lot ot distributions like Ubuntu, Fedora & co split headers from libraries,
-(usually splitted packages have a -dev suffix). In order to build qfit gui,
-you need these header, while they aren't needed anymore to run the binary.
+(usually splitted packages have a -dev or -devel suffix).
+In order to build qfit gui, you need these headers (qt4-dev and qwt-dev),
+while they aren't needed anymore to run the binary.
+
+#############################################################################
+
+File format
+-------------------------
+
+qfit can read just simple text files. A data file must have at least two
+columns (the first for the x data and the second for the y data).
+If you don't set explicity a custom error value for the y array, the
+file must have also a third column for the y errors!
 
 #############################################################################
 
