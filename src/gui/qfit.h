@@ -27,8 +27,7 @@
 #include <QtGui/QWidget>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_intervalcurve.h>
-#include <qwt_interval_symbol.h>
-#include <qwt_symbol.h>
+
 #include "ui_maindialog.h"
 
 class qfit : public QWidget, private Ui_Maindialog
@@ -46,6 +45,8 @@ public slots:
   void toggleCustomError(int);
   void openFile();
   void cleanLog();
+  void displayInfo();
+  void savePlot();
 private:
   vector<double> xdata;
   vector<double> ydata;
@@ -56,6 +57,7 @@ private:
   QwtPlotIntervalCurve *range_plot;
   QwtPlotCurve *model_plot;
   int plotLinearData();
+  int setupGui();
 };
 
 #endif // qfit_H

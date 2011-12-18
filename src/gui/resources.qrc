@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>resources/info.png</file>
+    <file>resources/curve_to.png</file>
     <file>resources/print-printer.png</file>
     <file>resources/trash.png</file>
     <file>resources/go-3.png</file>
