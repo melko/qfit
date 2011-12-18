@@ -5,6 +5,6 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 add_subdirectory(lib)
 add_subdirectory(cli)
 
-if(USE_GUI AND QT4_FOUND)
+if(WITH_GUI AND QT4_FOUND)
 add_subdirectory(gui)
-endif(USE_GUI AND QT4_FOUND)
+endif(WITH_GUI AND QT4_FOUND)

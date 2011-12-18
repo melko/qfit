@@ -27,9 +27,11 @@ Qwt (la versione minima richiesta delle Qwt è la 6, la 5 non va bene).
 Attraverso cmake si possono passare alcuni argomenti al compilatore per specificare il
 target della compilazione:
 
-usare
-$ cmake -D USE_GUI=OFF
-per evitare la compilazione dell'interfaccia grafica.
+WITH_GUI=OFF	per compilare solo l'interfaccia a riga di comando
+WITH_QWT=OFF	per disabilitare il Widget per i grafici
+
+esempio
+$ cmake -D USE_GUI=OFF ..
 
 *NOTA* per gli utenti delle distribuzioni più blasonate:
 la maggior parte delle distro quali Ubuntu, Fedora & co sono solite separare i

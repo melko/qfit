@@ -24,9 +24,11 @@ the Qwt libs are needed (you need at least Qwt6, Qwt5 won't work).
 
 you can state some arguments to cmake to change the default behaviour
 
-use
-$ cmake -D USE_GUI=OFF
-to not build the Qt interface
+WITH_GUI=OFF	to build just the cli
+WITH_QWT=OFF	to build without the plot Widget
+
+example:
+$ cmake -D USE_GUI=OFF ..
 
 *WARNING*
 A lot ot distributions like Ubuntu, Fedora & co split headers from libraries,

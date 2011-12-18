@@ -8,10 +8,14 @@ set(QFIT_VERSION_PATCH 1)
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -g")
 
-option(USE_GUI "Build the Qt interface" ON)
+option(WITH_GUI "Build the Qt interface" ON)
+option(WITH_QWT "Build GUI with the plot Widget" ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
-find_package(Qwt6)
+find_package(Qt4)
+if(WITH_GUI AND WITH_QWT)
+	find_package(Qwt6 REQUIRED)
+endif(WITH_GUI AND WITH_QWT)
 
 add_subdirectory(src)
 
