@@ -109,6 +109,7 @@ int display_usage(const char* name)
 {
   cout << "Usage: " << name << " [OPTIONS]... FILE\n\n"
        << "  -h, --help\t\tprint this help\n"
+       << "  -v, --version\t\tprint version\n"
        << "  -e, --error NUM\tuse NUM as custom error value\n"
        << "  -li, --linear\t\tdo a linear regression (default)\n"
        << "\n" //TODO add other fit types
@@ -116,7 +117,7 @@ int display_usage(const char* name)
        << "the first is used for x data, the second for y data and the third for y errors.\n"
        << "When using a custom error (-e,--error), the third column is ignored.\n"
        << "\n"
-       << "Examples:\n"
+       << "Examples:\n\n"
        << "  " << name << " foo.txt\n"
        << "  " << name << " -e 0.426 foo.txt\n"
        << "\n"
