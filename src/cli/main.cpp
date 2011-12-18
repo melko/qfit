@@ -96,8 +96,17 @@ int display_usage(const char* name)
        << "  -e, --error NUM\tuse NUM as custom error value\n"
        << "  -li, --linear\t\tdo a linear regression (default)\n"
        << "\n" //TODO add other fit types
-       << "Report bugs to: http://code.google.com/p/qfit/issues/list\n"
-       << "QFit home page: http://code.google.com/p/qfit\n";
+       << "FILE must be a text file with three columns (or two if you use a custom error),\n"
+       << "the first is used for x data, the second for y data and the third for y errors.\n"
+       << "When using a custom error (-e,--error), the third column is ignored.\n"
+       << "\n"
+       << "Examples:\n"
+       << "  " << name << " foo.txt\n"
+       << "  " << name << " -e 0.426 foo.txt\n"
+       << "\n"
+       << "Report bugs to: https://github.com/melko/qfit/issues\n"
+       << "                <lorddarthfener@gmail.com>\n"
+       << "QFit home page: https://github.com/melko/qfit\n";
   return -1;
 }
 
