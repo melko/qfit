@@ -22,6 +22,7 @@
 #define FITTOOLS_H
 
 #include "log.h"
+#include "fitconfig.h"
 
 #include <math.h>
 #include <vector>
@@ -67,8 +68,7 @@ public:
   
   union FitResult{
     LinearFitResult _linear_result;
-    SlopeFitResult _slope_result;
-    HorizontalFitResult _horizontal_result;
+    //TODO exponential and logaritmic
   };
 
   LinearFitResult getLinearResult();

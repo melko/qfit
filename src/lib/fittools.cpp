@@ -134,18 +134,18 @@ FitTools::LinearFitResult FitTools::getLinearResult()
 FitTools::SlopeFitResult FitTools::getSlopeResult()
 {
   SlopeFitResult ris;
-  ris.m = _fit_result._slope_result.m;
-  ris.m_error = _fit_result._slope_result.m_error;
-  ris.chi_square = _fit_result._slope_result.chi_square;
+  ris.m = _fit_result._linear_result.m;
+  ris.m_error = _fit_result._linear_result.m_error;
+  ris.chi_square = _fit_result._linear_result.chi_square;
   return ris;
 }
 
 FitTools::HorizontalFitResult FitTools::getHorizontalResult()
 {
   HorizontalFitResult ris;
-  ris.q = _fit_result._horizontal_result.q;
-  ris.q_error = _fit_result._horizontal_result.q_error;
-  ris.chi_square = _fit_result._horizontal_result.chi_square;
+  ris.q = _fit_result._linear_result.q;
+  ris.q_error = _fit_result._linear_result.q_error;
+  ris.chi_square = _fit_result._linear_result.chi_square;
   return ris;
 }
 
@@ -212,10 +212,10 @@ inline int FitTools::_chi_square_linear()
 */
 inline int FitTools::_chi_square_slope()
 {
-  _fit_result._slope_result.chi_square = 0;
+  _fit_result._linear_result.chi_square = 0;
   
   for(int i=0;i<(int)_xdata.size();i++){
-    _fit_result._slope_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._slope_result.m * _xdata.at(i))/_yerrors.at(i));
+    _fit_result._linear_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._linear_result.m * _xdata.at(i))/_yerrors.at(i));
   }
   
   return 0;
@@ -226,10 +226,10 @@ inline int FitTools::_chi_square_slope()
 */
 inline int FitTools::_chi_square_horizontal()
 {
-  _fit_result._horizontal_result.chi_square = 0;
+  _fit_result._linear_result.chi_square = 0;
   
   for(int i=0;i<(int)_xdata.size();i++){
-    _fit_result._horizontal_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._horizontal_result.q)/_yerrors.at(i));
+    _fit_result._linear_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._linear_result.q)/_yerrors.at(i));
   }
 
   return 0;
@@ -266,16 +266,16 @@ int FitTools::_print_linear(ostream& sout)
 int FitTools::_print_slope(ostream& sout)
 {
   sout << scientific
-       << "m = " << _fit_result._slope_result.m << "\ts(m) = " << _fit_result._slope_result.m_error << endl
-       << "X2 = " << _fit_result._slope_result.chi_square << endl;
+       << "m = " << _fit_result._linear_result.m << "\ts(m) = " << _fit_result._linear_result.m_error << endl
+       << "X2 = " << _fit_result._linear_result.chi_square << endl;
        return 0;
 }
 
 int FitTools::_print_horizontal(ostream& sout)
 {
   sout << scientific
-       << "q = " << _fit_result._horizontal_result.q << "\ts(q) = " << _fit_result._horizontal_result.q_error << endl
-       << "X2 = " << _fit_result._horizontal_result.chi_square << endl;
+       << "q = " << _fit_result._linear_result.q << "\ts(q) = " << _fit_result._linear_result.q_error << endl
+       << "X2 = " << _fit_result._linear_result.chi_square << endl;
        return 0;
 }
 
