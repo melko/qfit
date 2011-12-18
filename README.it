@@ -11,7 +11,7 @@ Compilare qfit (linux)
 cmake permette di compilare i sorgenti in una cartella differente da
 quella in cui si trovano, così che non vengono mischiati sorgenti e binari.
 Per compilare qfit è necessario un compilatore, inoltre è comodo avere
-cmake per non dover specificare manualmente al compilatorei sorgenti.
+cmake per non dover specificare manualmente al compilatore i sorgenti.
 
 Nella cartella dei sorgenti digitare:
 
