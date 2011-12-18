@@ -29,7 +29,7 @@ int Data::ReadFile(char* path,				/* percorso del file */
   ifstream file(path);
   
   if(!file.is_open()){
-    cerr << "Errore nell'apertura del file\n";
+    cerr << "Can't open file\n";
     return(-2);
   }
   
