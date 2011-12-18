@@ -27,9 +27,9 @@
 #include <QtGui/QLabel>
 #include <QtGui/QTextEdit>
 #include <QtGui/QPixmap>
-#include <QSpacerItem>
-#include <QDesktopServices>
-#include <QUrl>
+#include <QtGui/QSpacerItem>
+#include <QtGui/QDesktopServices>
+#include <QtCore/QUrl>
 
 About::About(QWidget *parent /*= 0*/) : QDialog(parent)
 {

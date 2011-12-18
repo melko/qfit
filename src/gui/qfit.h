@@ -25,10 +25,15 @@
 
 #include <QString>
 #include <QtGui/QWidget>
+
+#ifdef Qwt6_FOUND
 #include <qwt_plot_curve.h>
 #include <qwt_plot_intervalcurve.h>
 
 #include "ui_maindialog.h"
+#else
+#include "ui_maindialog_noqwt.h"
+#endif
 
 class qfit : public QWidget, private Ui_Maindialog
 {
@@ -37,7 +42,11 @@ public:
   qfit();
   virtual ~qfit();
   int printResult();
+  
+#ifdef Qwt6_FOUND
   int plotData();
+#endif
+
 public slots:
   void appendLog(const char* c);
   void changeFitType(int state);
@@ -46,17 +55,25 @@ public slots:
   void openFile();
   void cleanLog();
   void displayInfo();
+
+#ifdef Qwt6_FOUND
   void savePlot();
+#endif
+
 private:
   vector<double> xdata;
   vector<double> ydata;
   vector<double> yerrors;
   FitTools *fit;
   FitTools::FitFunction fit_type;
+
+#ifdef Qwt6_FOUND
   QwtPlotCurve *data_plot;
   QwtPlotIntervalCurve *range_plot;
   QwtPlotCurve *model_plot;
   int plotLinearData();
+#endif
+
   int setupGui();
 };
 

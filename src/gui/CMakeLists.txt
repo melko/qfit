@@ -3,7 +3,13 @@ include_directories(${QT_INCLUDES} ${Qwt5_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DI
 set(qfit_SRCS about.cpp qfit.cpp main.cpp)
 qt4_automoc(${qfit_SRCS})
 
+if(Qwt6_FOUND)
 set(qfit_ui maindialog.ui)
+else(Qwt6_FOUND)
+set(qfit_ui maindialog_noqwt.ui)
+message(WARNING "QFit will be built without the plot widget")
+endif(Qwt6_FOUND)
+
 qt4_wrap_ui(qfit_SRCS ${qfit_ui})
 
 set(qfit_resources resources.qrc)

@@ -32,6 +32,8 @@
 #include <QtGui/QAction>
 #include <QtGui/QImageWriter>
 #include <QtGui/QFileDialog>
+
+#ifdef Qwt6_FOUND
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_renderer.h>
@@ -40,13 +42,18 @@
 #include <qwt_plot_zoomer.h>
 #include <qwt_interval_symbol.h>
 #include <qwt_symbol.h>
+#endif
 
 qfit::qfit()
 {
   fit_type = FitTools::LINEAR_FIT;
+
+#ifdef Qwt6_FOUND
   data_plot = NULL;
   range_plot = NULL;
   model_plot = NULL;
+#endif
+
   fit = NULL;
 
   setupUi(this);
@@ -60,7 +67,10 @@ qfit::qfit()
   connect(selectFit, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFitType(int)));
   connect(cleanLogButton, SIGNAL(clicked(bool)), this, SLOT(cleanLog()));
   connect(infoButton, SIGNAL(clicked(bool)), this, SLOT(displayInfo()));
+  
+#ifdef Qwt6_FOUND
   connect(savePlotButton, SIGNAL(clicked(bool)), this, SLOT(savePlot()));
+#endif
 }
 
 qfit::~qfit()
@@ -82,6 +92,7 @@ void qfit::displayInfo()
   about->exec();
 }
 
+#ifdef Qwt6_FOUND
 void qfit::savePlot()
 {
   QString imageFilter;
@@ -107,6 +118,7 @@ void qfit::savePlot()
     renderer.renderDocument(qwtPlot, fileName, QSizeF(300,200), 85);
   }
 }
+#endif
 
 void qfit::toggleCustomError(int state)
 {
@@ -175,9 +187,12 @@ void qfit::startFitClicked()
   fit->Fit();
   printResult();
   
+#ifdef Qwt6_FOUND
   plotData();
+#endif
 }
 
+#ifdef Qwt6_FOUND
 int qfit::plotData()
 {
   delete data_plot;
@@ -202,8 +217,9 @@ int qfit::plotData()
   savePlotButton->setEnabled(true);
   return(0);
 }
+#endif
 
-
+#ifdef Qwt6_FOUND
 int qfit::plotLinearData()
 {
   /* standard data */
@@ -245,7 +261,7 @@ int qfit::plotLinearData()
   model_plot->attach(qwtPlot);
   return(0);
 }
-
+#endif
 
 void qfit::appendLog(const char* c)
 {
@@ -270,6 +286,7 @@ int qfit::setupGui()
   selectFit->addItem(tr("Fit Esponenziale"));
   selectFit->addItem(tr("Fit Logaritmico"));*/
   
+#ifdef Qwt6_FOUND
   // plot stuff
   // panning with the middle mouse button
   QwtPlotPanner *panner = new QwtPlotPanner(qwtPlot->canvas());
@@ -293,6 +310,7 @@ int qfit::setupGui()
   grid->setMajPen(QPen(Qt::white, 0, Qt::DotLine));
 //   grid->setMinPen(QPen(Qt::gray, 0, Qt::DotLine));
   grid->attach(qwtPlot);
+#endif
   
   // tooltips
   infoButton->setToolTip(trUtf8("Info"));
@@ -300,7 +318,11 @@ int qfit::setupGui()
   selectFit->setToolTip(trUtf8("Tipologia del fit"));
   startFit->setToolTip(trUtf8("Via"));
   cleanLogButton->setToolTip(trUtf8("Svuota il log"));
+  
+#ifdef Qwt6_FOUND
   savePlotButton->setToolTip(trUtf8("Salva il grafico"));
+#endif
+  
   return(0);
 }
 
