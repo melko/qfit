@@ -1,0 +1,44 @@
+qfit è un piccolo tool per l'analisi dei dati in grado di fare i fit.
+
+Il progetto è composto da un'interfaccia a riga di comando e una gui
+scritta in qt, entrambe basate sulla libreria FitTools.
+
+######################################################################################
+
+Compilare qfit (linux)
+-------------------------
+
+cmake permette di compilare i sorgenti in una cartella differente da
+quella in cui si trovano, così che non vengono mischiati sorgenti e binari.
+Per compilare qfit è necessario un compilatore, inoltre è comodo avere
+cmake per non dover specificare manualmente al compilatorei sorgenti.
+
+Nella cartella dei sorgenti digitare:
+
+$ mkdir build && cd build
+$ cmake ..
+$ make
+# make install (facoltativo)(possono essere necessari i privilegi di amministrazione)
+
+Le librerie Qt sono necessarie nel caso si voglia usare l'interfaccia grafica,
+per avere la possibilità di fare i grafici, sono necessarie anche le librerie
+Qwt (la versione minima richiesta delle Qwt è la 6, la 5 non va bene).
+
+Attraverso cmake si possono passare alcuni argomenti al compilatore per specificare il
+target della compilazione:
+
+usare
+$ cmake -D USE_GUI=OFF
+per evitare la compilazione dell'interfaccia grafica.
+
+*NOTA* per gli utenti delle distribuzioni più blasonate:
+la maggior parte delle distro quali Ubuntu, Fedora & co sono solite separare i
+pacchetti delle librerie dagli header di queste (in genere gli header vengono
+messi in pacchetti con il suffisso -dev). Per poter compilare qfit avrete bisogno
+anche degli header, mentre una volta compilato, potrete anche rimuoverli se non
+ne avete bisogno.
+
+######################################################################################
+
+Grazie al framework delle Qt, qfit *dovrebbe* essere in grado di funzionare
+anche su altre piattaforme non linux, ma ovviamente non offro nessun supporto.
