@@ -29,6 +29,7 @@
 using namespace std;
 
 int display_usage(const char* name);
+int display_version();
 
 int main(int argc, char** argv)
 {
@@ -43,8 +44,13 @@ int main(int argc, char** argv)
 
   /* scorrimento dei parametri */
   for (int i=1;i<argc;i++){
-    if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
-      return(display_usage(argv[0]));
+    if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){
+      display_usage(argv[0]);
+      return(0);
+    }
+    else if(strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0){
+      return(display_version());
+    }
     else if(strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--error") == 0){
       stringstream tmp(argv[1+i++]);
       tmp >> error;
@@ -89,6 +95,16 @@ int main(int argc, char** argv)
   return 0;
 }
 
+int display_version()
+{
+  cout << "cfit " << QFIT_VERSION_MAJOR << "." << QFIT_VERSION_MINOR << "." << QFIT_VERSION_PATCH
+       << "\nCopyright (C) 2011 Paolo Cretaro <lorddarthfener@gmail.com>.\n"
+       << "License GPLv3+: GNU GPL version 3 <http://gnu.org/licenses/gpl.html>.\n"
+       << "This is free software: you are free to change and redistribute it.\n"
+       << "There is NO WARRANTY, to the extent permitted by law.\n\n"
+       << "Written by Paolo Cretaro.\n";
+  return -1;
+}
 int display_usage(const char* name)
 {
   cout << "Usage: " << name << " [OPTIONS]... FILE\n\n"
