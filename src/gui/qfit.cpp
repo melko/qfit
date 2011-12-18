@@ -280,7 +280,7 @@ int qfit::setupGui()
 {
 //   if(QApplication::arguments().size() > 1)
 //     filePath->setText(QApplication::arguments().at(1));
-  selectFit->addItem(tr("Fit Lineare"));/*TODO add once are available in FitTools
+  selectFit->addItem(tr("Fit Linear"));/*TODO add once are available in FitTools
   selectFit->addItem(tr("Fit Pendenza"));
   selectFit->addItem(tr("Fit Orizzontale"));
   selectFit->addItem(tr("Fit Esponenziale"));
@@ -313,14 +313,14 @@ int qfit::setupGui()
 #endif
   
   // tooltips
-  infoButton->setToolTip(trUtf8("Info"));
-  openFileButton->setToolTip(trUtf8("Apri un file"));
-  selectFit->setToolTip(trUtf8("Tipologia del fit"));
-  startFit->setToolTip(trUtf8("Via"));
-  cleanLogButton->setToolTip(trUtf8("Svuota il log"));
+  infoButton->setToolTip(trUtf8("About"));
+  openFileButton->setToolTip(trUtf8("Open file"));
+  selectFit->setToolTip(trUtf8("Fit typology"));
+  startFit->setToolTip(trUtf8("GO!"));
+  cleanLogButton->setToolTip(trUtf8("Clear log"));
   
 #ifdef Qwt6_FOUND
-  savePlotButton->setToolTip(trUtf8("Salva il grafico"));
+  savePlotButton->setToolTip(trUtf8("Save plot"));
 #endif
   
   return(0);

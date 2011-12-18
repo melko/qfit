@@ -49,8 +49,8 @@ About::About(QWidget *parent /*= 0*/) : QDialog(parent)
 
   QSpacerItem *spacer = new QSpacerItem(40,20, QSizePolicy::Expanding, QSizePolicy::Minimum);
   QLabel *info = new QLabel();
-  info->setText(trUtf8("<p><b>QFit</b></p><p>Versione: %1.%2.%3</p>"
-  "<p>Home Page: <a href=\"http://code.google.com/p/qfit/\">http://code.google.com/p/qfit/</a></p>")
+  info->setText(trUtf8("<p><b>QFit</b></p><p>Version: %1.%2.%3</p>"
+  "<p>Home Page: <a href=\"https://github.com/melko/qfit\">https://github.com/melko/qfit</a></p>")
     .arg(QFIT_VERSION_MAJOR)
     .arg(QFIT_VERSION_MINOR)
     .arg(QFIT_VERSION_PATCH));
@@ -58,9 +58,9 @@ About::About(QWidget *parent /*= 0*/) : QDialog(parent)
   
   QTextEdit *other = new QTextEdit();
   other->setReadOnly(true);
-  other->append(trUtf8("<p><b>Autore:</b> Paolo Cretaro (lorddarthfener@gmail.com)</p>"
-    "<p><b>Ringraziamenti:<br/></p>"
-    "<p>Questo software è rilasciato secondo i termini della <i>GNU General Public License v3</i>.</p>"));
+  other->append(trUtf8("<p><b>Author:</b> Paolo Cretaro (lorddarthfener@gmail.com)</p>"
+    "<p><b>Thanks To:<br/></p>"
+    "<p>This software is released under the terms of the <i>GNU General Public License v3</i>.</p>"));
   
   hlayout->addWidget(picture);
   hlayout->addWidget(info);
