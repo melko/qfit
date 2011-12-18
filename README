@@ -31,7 +31,7 @@ example:
 $ cmake -D USE_GUI=OFF ..
 
 *WARNING*
-A lot ot distributions like Ubuntu, Fedora & co split headers from libraries,
+A lot of distributions like Ubuntu, Fedora & co split headers from libraries,
 (usually splitted packages have a -dev or -devel suffix).
 In order to build qfit gui, you need these headers (qt4-dev and qwt-dev),
 while they aren't needed anymore to run the binary.
