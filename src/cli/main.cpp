@@ -28,7 +28,7 @@
 
 using namespace std;
 
-int display_usage();
+int display_usage(const char* name);
 
 int main(int argc, char** argv)
 {
@@ -37,14 +37,14 @@ int main(int argc, char** argv)
   FitTools::FitFunction fit_type = FitTools::LINEAR_FIT;
 
   if(argc<2){
-    display_usage();
+    display_usage(argv[0]);
     return(-1);
   }
 
   /* scorrimento dei parametri */
   for (int i=1;i<argc;i++){
     if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
-      return(display_usage());
+      return(display_usage(argv[0]));
     else if(strcmp(argv[i], "-e") == 0 || strcmp(argv[i], "--error") == 0){
       stringstream tmp(argv[1+i++]);
       tmp >> error;
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
   }
 
   if(file_path == NULL)
-    return(display_usage());
+    return(display_usage(argv[0]));
   
   vector<double> xdata, ydata, yerrors;
   if(Data::ReadFile(file_path, xdata, ydata, yerrors, error))
@@ -89,10 +89,15 @@ int main(int argc, char** argv)
   return 0;
 }
 
-int display_usage()
+int display_usage(const char* name)
 {
-  cout << "Display "
-       << "usage\n";
+  cout << "Usage: " << name << " [OPTIONS]... FILE\n\n"
+       << "  -h, --help\t\tprint this help\n"
+       << "  -e, --error NUM\tuse NUM as custom error value\n"
+       << "  -li, --linear\t\tdo a linear regression (default)\n"
+       << "\n" //TODO add other fit types
+       << "Report bugs to: http://code.google.com/p/qfit/issues/list\n"
+       << "QFit home page: http://code.google.com/p/qfit\n";
   return -1;
 }
 
