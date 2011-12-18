@@ -78,7 +78,7 @@ qfit::~qfit()
 
 void qfit::openFile()
 {
-  filePath->setText(QFileDialog::getOpenFileName(this, tr("Apri"), "", trUtf8("File di Testo (*.txt);;Tutti i File (*)")));
+  filePath->setText(QFileDialog::getOpenFileName(this, tr("Open"), "", trUtf8("Text File (*.txt);;All Files (*)")));
 }
 
 void qfit::cleanLog()
@@ -99,7 +99,7 @@ void qfit::savePlot()
   const QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
   if(imageFormats.size() > 0){
     for(int i=0;i<imageFormats.size();i++){
-      imageFilter += "Immagine ";
+      imageFilter += "Image ";
       imageFilter += imageFormats[i];
       imageFilter += " (*.";
       imageFilter += imageFormats[i];
@@ -107,10 +107,10 @@ void qfit::savePlot()
     }
   }
 #ifndef QWT_NO_SVG
-  imageFilter += "Documento SVG (*.svg)";
+  imageFilter += "File SVG (*.svg)";
 #endif
-  imageFilter += ";;Documento PDF (*.pdf);;Documento Postscript (*.ps)";
-  QString fileName = QFileDialog::getSaveFileName(this, trUtf8("Esporta"), "",
+  imageFilter += ";;File PDF (*.pdf);;File Postscript (*.ps)";
+  QString fileName = QFileDialog::getSaveFileName(this, trUtf8("Export"), "",
 						  imageFilter, NULL, QFileDialog::DontConfirmOverwrite);
   if(!fileName.isEmpty()){
     QwtPlotRenderer renderer;
@@ -134,23 +134,23 @@ void qfit::changeFitType(int state)
   switch(state){
     case FitTools::LINEAR_FIT:
       fit_type = FitTools::LINEAR_FIT;
-      appendLog("Impostato fit lineare");
+      appendLog("Fit Linear set");
       break;
     case FitTools::SLOPE_FIT:
       fit_type = FitTools::SLOPE_FIT;
-      appendLog("Impostato fit pendenza");
+      appendLog("Fit Slope set");
       break;
     case FitTools::HORIZONTAL_FIT:
       fit_type = FitTools::HORIZONTAL_FIT;
-      appendLog("Impostato fit orizzontale");
+      appendLog("Fit Horizontal set");
       break;
     case FitTools::EXPONENTIAL_FIT:
       fit_type = FitTools::EXPONENTIAL_FIT;
-      appendLog("Impostato fit esponenziale");
+      appendLog("Fit Exponential set");
       break;
-    case FitTools::LOGARITMIC_FIT:
-      fit_type = FitTools::LOGARITMIC_FIT;
-      appendLog("Impostato fit logaritmico");
+    case FitTools::LOGARITHMIC_FIT:
+      fit_type = FitTools::LOGARITHMIC_FIT;
+      appendLog("Fit Logarithmic set");
       break;
   }
 }
@@ -159,7 +159,7 @@ void qfit::changeFitType(int state)
 void qfit::startFitClicked()
 {
   if(filePath->text().isEmpty()){
-    appendLog("Non è stato selezionato nessun file da aprire!");
+    appendLog("Select a file to open!");
     return;
   }
   double error = -1;
@@ -168,13 +168,13 @@ void qfit::startFitClicked()
   if(customError->isChecked()){
     error = errorValue->text().toDouble();
     if(error <= 0.0){
-      appendLog("L'errore inserito non è valido, verrà usato un errore standard pari a 1.0");
+      appendLog("Custom error is not valid, a default one of 1.0 will be used");
       error = 1;
     }
   }
 
   if(Data::ReadFile(filePath->text().toLatin1().data(), xdata, ydata, yerrors, error)){
-    appendLog("Errore nell'apertura del file");
+    appendLog("Error opening file");
     return;
   }
 
@@ -207,7 +207,7 @@ int qfit::plotData()
       break;
       //TODO fare gli altri casi
     case FitTools::EXPONENTIAL_FIT:
-    case FitTools::LOGARITMIC_FIT:
+    case FitTools::LOGARITHMIC_FIT:
       return(1);
       break;
   }
@@ -281,10 +281,10 @@ int qfit::setupGui()
 //   if(QApplication::arguments().size() > 1)
 //     filePath->setText(QApplication::arguments().at(1));
   selectFit->addItem(tr("Fit Linear"));/*TODO add once are available in FitTools
-  selectFit->addItem(tr("Fit Pendenza"));
-  selectFit->addItem(tr("Fit Orizzontale"));
-  selectFit->addItem(tr("Fit Esponenziale"));
-  selectFit->addItem(tr("Fit Logaritmico"));*/
+  selectFit->addItem(tr("Fit Slope"));
+  selectFit->addItem(tr("Fit Horizontal"));
+  selectFit->addItem(tr("Fit Exponential"));
+  selectFit->addItem(tr("Fit Logarithmic"));*/
   
 #ifdef Qwt6_FOUND
   // plot stuff

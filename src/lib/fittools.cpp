@@ -70,7 +70,7 @@ FitTools::FitResult FitTools::Fit()
       _chi_square_horizontal();
       break;
     case EXPONENTIAL_FIT: //TODO
-    case LOGARITMIC_FIT: //TODO
+    case LOGARITHMIC_FIT: //TODO
       break;
   }
   
@@ -246,7 +246,7 @@ int FitTools::printResult(ostream& sout)
     case FitTools::HORIZONTAL_FIT:
       _print_horizontal(sout);
     case FitTools::EXPONENTIAL_FIT: //TODO
-    case FitTools::LOGARITMIC_FIT:
+    case FitTools::LOGARITHMIC_FIT:
       return 0;
       break;
   }

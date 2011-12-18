@@ -56,19 +56,19 @@ public:
     double chi_square;
   };
 
-  //TODO exponential and logaritmic result
+  //TODO exponential and logarithmic result
 
   enum FitFunction {
     LINEAR_FIT=0,
     SLOPE_FIT,
     HORIZONTAL_FIT,
     EXPONENTIAL_FIT,
-    LOGARITMIC_FIT
+    LOGARITHMIC_FIT
   };
   
   union FitResult{
     LinearFitResult _linear_result;
-    //TODO exponential and logaritmic
+    //TODO exponential and logarithmic
   };
 
   LinearFitResult getLinearResult();

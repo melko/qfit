@@ -61,8 +61,8 @@ int main(int argc, char** argv)
       fit_type = FitTools::HORIZONTAL_FIT;
     else if(strcmp(argv[i], "-ex") == 0 || strcmp(argv[i], "--exponential") == 0)
       fit_type = FitTools::EXPONENTIAL_FIT;
-    else if(strcmp(argv[i], "-lo") == 0 || strcmp(argv[i], "--logaritmic") == 0)
-      fit_type = FitTools::LOGARITMIC_FIT;
+    else if(strcmp(argv[i], "-lo") == 0 || strcmp(argv[i], "--logarithmic") == 0)
+      fit_type = FitTools::LOGARITHMIC_FIT;
     else
       file_path = argv[i];
   }
