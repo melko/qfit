@@ -40,5 +40,15 @@ ne avete bisogno.
 
 ######################################################################################
 
+Formato dei files
+-------------------------
+
+qfit è in grado di leggere solamente semplici file di testo. Il file deve contenere
+almeno due colonne (la prima per le x e la seconda per le y).
+Se non viene esplicitamente imposto un errore comune per le y, il file dovrà contenere
+anche una terza colonna con i suddetti errori!
+
+######################################################################################
+
 Grazie al framework delle Qt, qfit *dovrebbe* essere in grado di funzionare
 anche su altre piattaforme non linux, ma ovviamente non offro nessun supporto.
