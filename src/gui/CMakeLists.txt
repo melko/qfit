@@ -1,4 +1,4 @@
-include_directories(${QT_INCLUDES} ${Qwt5_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${QT_INCLUDES} ${Qwt6_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(qfit_SRCS about.cpp qfit.cpp main.cpp)
 qt4_automoc(${qfit_SRCS})
