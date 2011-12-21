@@ -280,6 +280,9 @@ int qfit::setupGui()
 {
 //   if(QApplication::arguments().size() > 1)
 //     filePath->setText(QApplication::arguments().at(1));
+  if(QApplication::argc() == 2){
+    filePath->setText(QApplication::argv()[1]);
+  }
   selectFit->addItem(tr("Fit Linear"));/*TODO add once are available in FitTools
   selectFit->addItem(tr("Fit Slope"));
   selectFit->addItem(tr("Fit Horizontal"));
