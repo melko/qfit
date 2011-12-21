@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=QFit
+Comment=Qt4-based fitting software
+GenericName=QFit
+Exec=qfit
+Icon=qfit
+Terminal=false
+Type=Application
+Categories=Education;Science;Math;Qt;
+X-KDE-StartupNotify=false

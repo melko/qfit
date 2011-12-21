@@ -24,3 +24,5 @@ add_executable(qfit ${qfit_SRCS})
 target_link_libraries(qfit ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${Qwt6_Qt4_LIBRARY} fit)
 
 install(TARGETS qfit DESTINATION bin)
+install(FILES qfit.desktop DESTINATION share/applications)
+install(FILES qfit.png DESTINATION share/pixmaps)
