@@ -26,12 +26,12 @@
 
 class About : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     About(QWidget* parent = 0);
     virtual ~About();
 public slots:
-  void on_clickLink(const QString &link);
+    void on_clickLink(const QString &link);
 };
 
 #endif // ABOUT_H

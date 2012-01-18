@@ -38,36 +38,36 @@ About::About(QWidget *parent /*= 0*/) : QDialog(parent)
 //   sizePolicy.setHorizontalStretch(0);
 //   sizePolicy.setVerticalStretch(0);
 //   setSizePolicy(sizePolicy);
-  setFixedSize(500,400);
-  
-  QVBoxLayout *mainlayout = new QVBoxLayout();
-  QHBoxLayout *hlayout = new QHBoxLayout();
+    setFixedSize(500, 400);
 
-  QLabel *picture =  new QLabel();
-  QPixmap(QString::fromUtf8(":/icons/resources/curve_to.png"));
-  picture->setPixmap(QPixmap(QString::fromUtf8(":/icons/resources/curve_to.png")).scaled(150,150));
+    QVBoxLayout *mainlayout = new QVBoxLayout();
+    QHBoxLayout *hlayout = new QHBoxLayout();
 
-  QSpacerItem *spacer = new QSpacerItem(40,20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-  QLabel *info = new QLabel();
-  info->setText(trUtf8("<p><b>QFit</b></p><p>Version: %1.%2.%3</p>"
-  "<p>Home Page: <a href=\"https://github.com/melko/qfit\">https://github.com/melko/qfit</a></p>")
-    .arg(QFIT_VERSION_MAJOR)
-    .arg(QFIT_VERSION_MINOR)
-    .arg(QFIT_VERSION_PATCH));
-  connect(info, SIGNAL(linkActivated(QString)), this, SLOT(on_clickLink(QString)));
-  
-  QTextEdit *other = new QTextEdit();
-  other->setReadOnly(true);
-  other->append(trUtf8("<p><b>Author:</b> Paolo Cretaro (lorddarthfener@gmail.com)</p>"
-    "<p><b>Thanks To:<br/></p>"
-    "<p>This software is released under the terms of the <i>GNU General Public License v3</i>.</p>"));
-  
-  hlayout->addWidget(picture);
-  hlayout->addWidget(info);
-  hlayout->addItem(spacer);
-  mainlayout->addLayout(hlayout);
-  mainlayout->addWidget(other);
-  setLayout(mainlayout);
+    QLabel *picture =  new QLabel();
+    QPixmap(QString::fromUtf8(":/icons/resources/curve_to.png"));
+    picture->setPixmap(QPixmap(QString::fromUtf8(":/icons/resources/curve_to.png")).scaled(150, 150));
+
+    QSpacerItem *spacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    QLabel *info = new QLabel();
+    info->setText(trUtf8("<p><b>QFit</b></p><p>Version: %1.%2.%3</p>"
+                         "<p>Home Page: <a href=\"https://github.com/melko/qfit\">https://github.com/melko/qfit</a></p>")
+                  .arg(QFIT_VERSION_MAJOR)
+                  .arg(QFIT_VERSION_MINOR)
+                  .arg(QFIT_VERSION_PATCH));
+    connect(info, SIGNAL(linkActivated(QString)), this, SLOT(on_clickLink(QString)));
+
+    QTextEdit *other = new QTextEdit();
+    other->setReadOnly(true);
+    other->append(trUtf8("<p><b>Author:</b> Paolo Cretaro (lorddarthfener@gmail.com)</p>"
+                         "<p><b>Thanks To:<br/></p>"
+                         "<p>This software is released under the terms of the <i>GNU General Public License v3</i>.</p>"));
+
+    hlayout->addWidget(picture);
+    hlayout->addWidget(info);
+    hlayout->addItem(spacer);
+    mainlayout->addLayout(hlayout);
+    mainlayout->addWidget(other);
+    setLayout(mainlayout);
 }
 
 About::~About()
@@ -77,7 +77,7 @@ About::~About()
 
 void About::on_clickLink(const QString& link)
 {
-  QDesktopServices::openUrl(QUrl(link));
+    QDesktopServices::openUrl(QUrl(link));
 }
 
 #include "about.moc"

@@ -37,44 +37,44 @@
 
 class qfit : public QWidget, private Ui_Maindialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-  qfit();
-  virtual ~qfit();
-  int printResult();
-  
+    qfit();
+    virtual ~qfit();
+    int printResult();
+
 #ifdef Qwt6_FOUND
-  int plotData();
+    int plotData();
 #endif
 
 public slots:
-  void appendLog(const char* c);
-  void changeFitType(int state);
-  void startFitClicked();
-  void toggleCustomError(int);
-  void openFile();
-  void cleanLog();
-  void displayInfo();
+    void appendLog(const char* c);
+    void changeFitType(int state);
+    void startFitClicked();
+    void toggleCustomError(int);
+    void openFile();
+    void cleanLog();
+    void displayInfo();
 
 #ifdef Qwt6_FOUND
-  void savePlot();
+    void savePlot();
 #endif
 
 private:
-  vector<double> xdata;
-  vector<double> ydata;
-  vector<double> yerrors;
-  FitTools *fit;
-  FitTools::FitFunction fit_type;
+    vector<double> xdata;
+    vector<double> ydata;
+    vector<double> yerrors;
+    FitTools *fit;
+    FitTools::FitFunction fit_type;
 
 #ifdef Qwt6_FOUND
-  QwtPlotCurve *data_plot;
-  QwtPlotIntervalCurve *range_plot;
-  QwtPlotCurve *model_plot;
-  int plotLinearData();
+    QwtPlotCurve *data_plot;
+    QwtPlotIntervalCurve *range_plot;
+    QwtPlotCurve *model_plot;
+    int plotLinearData();
 #endif
 
-  int setupGui();
+    int setupGui();
 };
 
 #endif // qfit_H

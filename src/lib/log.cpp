@@ -22,13 +22,13 @@
 
 Log::Log(ostream* stream)
 {
-  this->out = stream;
+    this->out = stream;
 }
 
 
 void Log::Write(const char* str)
 {
-  *out << str << endl;
+    *out << str << endl;
 }
 
 

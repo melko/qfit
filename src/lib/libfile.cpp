@@ -1,6 +1,6 @@
 /*
     libfile.cpp
-    
+
     Copyright (C) 2011  Paolo Cretaro <lorddarthfener@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -20,47 +20,46 @@
 #include "libfile.h"
 #include <stdlib.h>
 
-int Data::ReadFile(char* path,				/* percorso del file */
-		   vector< double >& xdata,
-		   vector< double >& ydata, 
-		   vector< double >& yerrors, 
-		   double err)				/* true == array yerrors */
+int Data::ReadFile(char* path,              /* percorso del file */
+                   vector< double >& xdata,
+                   vector< double >& ydata,
+                   vector< double >& yerrors,
+                   double err)              /* true == array yerrors */
 {
-  ifstream file(path);
-  
-  if(!file.is_open()){
-    cerr << "Can't open file\n";
-    return(-2);
-  }
-  
-  xdata.clear();
-  ydata.clear();
-  yerrors.clear();
-  
-  string line;
-  while(getline(file, line)){
-    stringstream str(line);
+    ifstream file(path);
 
-    // allow comments in the data file
-    if(!isdigit(line[0]))
-	    continue;
-
-    double tmp;
-    
-    str >> tmp;
-    xdata.push_back(tmp);
-    
-    str >> tmp;
-    ydata.push_back(tmp);
-    
-    if(err < 0){
-      str >> tmp;
-      yerrors.push_back(tmp);
+    if (!file.is_open()) {
+        cerr << "Can't open file\n";
+        return(-2);
     }
-    else
-      yerrors.push_back(err);
-  }
-  
-  file.close();
-  return(0);
+
+    xdata.clear();
+    ydata.clear();
+    yerrors.clear();
+
+    string line;
+    while (getline(file, line)) {
+        stringstream str(line);
+
+        // allow comments in the data file
+        if (!isdigit(line[0]))
+            continue;
+
+        double tmp;
+
+        str >> tmp;
+        xdata.push_back(tmp);
+
+        str >> tmp;
+        ydata.push_back(tmp);
+
+        if (err < 0) {
+            str >> tmp;
+            yerrors.push_back(tmp);
+        } else
+            yerrors.push_back(err);
+    }
+
+    file.close();
+    return(0);
 }

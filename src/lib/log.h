@@ -28,10 +28,10 @@ using namespace std;
 class Log
 {
 public:
-  Log(ostream *stream);
-  void Write(const char* str);
+    Log(ostream *stream);
+    void Write(const char* str);
 private:
-  ostream *out;
+    ostream *out;
 };
 
 #endif // LOG_H
