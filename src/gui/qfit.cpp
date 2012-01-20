@@ -1,7 +1,7 @@
 /*
  * qfit.cpp
  *
- * Copyright (C) 2011 by Paolo Cretaro <lorddarthfener@gmail.com>
+ * Copyright (C) 2011-2012 by Paolo Cretaro <lorddarthfener@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ void qfit::savePlot()
 
 void qfit::toggleCustomError(int state)
 {
-    // if the box is checked the state is 2
+    // NOTE: if the box is checked the state is 2
     if (state)
         errorValue->setReadOnly(false);
     else
@@ -331,4 +331,4 @@ int qfit::setupGui()
 
 #include "qfit.moc"
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */

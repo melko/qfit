@@ -1,7 +1,7 @@
 /*
  * main.cpp
  *
- * Copyright (C) 2011 by Paolo Cretaro <lorddarthfener@gmail.com>
+ * Copyright (C) 2011-2012 by Paolo Cretaro <lorddarthfener@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,4 +29,4 @@ int main(int argc, char** argv)
     return app.exec();
 }
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */

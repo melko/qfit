@@ -1,7 +1,7 @@
 /*
    fittools.cpp
 
-   Copyright (C) 2011  Paolo Cretaro <lorddarthfener@gmail.com>
+   Copyright (C) 2011-2012  Paolo Cretaro <lorddarthfener@gmail.com>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,27 +15,27 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-   */
+*/
 
 
 #include "fittools.h"
 
-FitTools::FitTools(std::vector< double >& x_array, std::vector< double >& y_array, std::vector< double >& errors_array, FitTools::FitFunction fit_type)
+FitTools::FitTools(std::vector< double > &x_array, std::vector< double > &y_array, std::vector< double > &errors_array, FitTools::FitFunction fit_type)
+    : _xdata(x_array),
+    _ydata(y_array),
+    _yerrors(errors_array),
+    _sum_weight(0),
+    _fit_type(fit_type)
 {
-    _xdata = x_array;
-    _ydata = y_array;
-    _yerrors = errors_array;
-    _fit_type = fit_type;
-    _sum_weight = 0;
 }
 
-FitTools::FitTools(std::vector< double >& x_array, std::vector< double >& y_array, double error, FitTools::FitFunction fit_type)
+FitTools::FitTools(std::vector< double > &x_array, std::vector< double > &y_array, double error, FitTools::FitFunction fit_type)
+    : _xdata(x_array),
+    _ydata(y_array),
+    _yerrors(vector<double>(y_array.size(), error)),
+    _sum_weight(0),
+    _fit_type(fit_type)
 {
-    _xdata = x_array;
-    _ydata = y_array;
-    _yerrors = vector<double>(y_array.size(), error);
-    _fit_type = fit_type;
-    _sum_weight = 0;
 }
 
 int FitTools::_prepare_fit()
@@ -151,7 +151,7 @@ FitTools::HorizontalFitResult FitTools::getHorizontalResult()
 
 /*
  * calcola la media pesata di un vettore
-*/
+ */
 double FitTools::mean(const std::vector< double >& data,    /* vettore di cui calcolare la media */
                       const std::vector< double >& weight)  /* vettore dei pesi */
 {
@@ -167,7 +167,7 @@ double FitTools::mean(const std::vector< double >& data,    /* vettore di cui ca
 
 /*
  * calcola la media aritmetica di un vettore
-*/
+ */
 double FitTools::mean(const std::vector< double >& data)
 {
     double result = 0;
@@ -181,7 +181,7 @@ double FitTools::mean(const std::vector< double >& data)
 /*
  * calcola un vettore le cui componenti sono il prodotto delle componenti dei
  * vettori in entrata
-*/
+ */
 vector< double > FitTools::vector_product(const std::vector< double >& v1, const std::vector< double >& v2)
 {
     vector<double> result(v1.size());
@@ -195,7 +195,7 @@ vector< double > FitTools::vector_product(const std::vector< double >& v1, const
 
 /*
  * calcola il chi quadro su un'aspettativa lineare
-*/
+ */
 inline int FitTools::_chi_square_linear()
 {
     _fit_result._linear_result.chi_square = 0;
@@ -209,7 +209,7 @@ inline int FitTools::_chi_square_linear()
 
 /*
  * calcola il chi quadro su un'aspettativa lineare solo pendenza
-*/
+ */
 inline int FitTools::_chi_square_slope()
 {
     _fit_result._linear_result.chi_square = 0;
@@ -223,7 +223,7 @@ inline int FitTools::_chi_square_slope()
 
 /*
  * calcola il chi quadro su un'aspettativa lineare solo altezza
-*/
+ */
 inline int FitTools::_chi_square_horizontal()
 {
     _fit_result._linear_result.chi_square = 0;
@@ -235,6 +235,9 @@ inline int FitTools::_chi_square_horizontal()
     return 0;
 }
 
+/*
+ * stampa i risultati su uno stream
+ */
 int FitTools::printResult(ostream& sout)
 {
     switch (_fit_type) {
@@ -279,4 +282,4 @@ int FitTools::_print_horizontal(ostream& sout)
     return 0;
 }
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */

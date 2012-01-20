@@ -1,7 +1,7 @@
 /*
    log.h
 
-   Copyright (C) 2011  Paolo Cretaro <lorddarthfener@gmail.com>
+   Copyright (C) 2011-2012  Paolo Cretaro <lorddarthfener@gmail.com>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,11 +29,11 @@ class Log
 {
 public:
     Log(ostream *stream);
-    void Write(const char* str);
+    void Write(const char *str);
 private:
     ostream *out;
 };
 
 #endif // LOG_H
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */

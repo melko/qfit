@@ -1,7 +1,7 @@
 /*
    fittools.h
 
-   Copyright (C) 2011  Paolo Cretaro <lorddarthfener@gmail.com>
+   Copyright (C) 2011-2012  Paolo Cretaro <lorddarthfener@gmail.com>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-   */
+*/
 
 
 #ifndef FITTOOLS_H
@@ -35,8 +35,8 @@ class FitTools
 {
 
 public:
-    static inline double mean(const std::vector<double>& data, const std::vector<double>& weight);
-    static inline double mean(const std::vector<double>& data);
+    static inline double mean(const std::vector<double> &data, const std::vector<double> &weight);
+    static inline double mean(const std::vector<double> &data);
     static inline vector<double> vector_product(const vector<double> &v1, const vector<double> &v2);
 
     struct LinearFitResult {
@@ -105,4 +105,4 @@ private:
 
 #endif // FITTOOLS_H
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */

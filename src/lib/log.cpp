@@ -1,7 +1,7 @@
 /*
    log.cpp
 
-   Copyright (C) 2011  Paolo Cretaro <lorddarthfener@gmail.com>
+   Copyright (C) 2011-2012  Paolo Cretaro <lorddarthfener@gmail.com>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,16 +20,16 @@
 
 #include "log.h"
 
-Log::Log(ostream* stream)
+Log::Log(ostream *stream)
 {
     this->out = stream;
 }
 
 
-void Log::Write(const char* str)
+void Log::Write(const char *str)
 {
     *out << str << endl;
 }
 
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */

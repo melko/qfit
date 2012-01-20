@@ -1,7 +1,7 @@
 /*
     libfile.cpp
 
-    Copyright (C) 2011  Paolo Cretaro <lorddarthfener@gmail.com>
+    Copyright (C) 2011-2012  Paolo Cretaro <lorddarthfener@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 #include <stdlib.h>
 
 int Data::ReadFile(char* path,              /* percorso del file */
-                   vector< double >& xdata,
-                   vector< double >& ydata,
-                   vector< double >& yerrors,
+                   vector< double > &xdata,
+                   vector< double > &ydata,
+                   vector< double > &yerrors,
                    double err)              /* true == array yerrors */
 {
     ifstream file(path);
@@ -63,3 +63,5 @@ int Data::ReadFile(char* path,              /* percorso del file */
     file.close();
     return(0);
 }
+
+/* vim: set ts=4 sw=4 et: */

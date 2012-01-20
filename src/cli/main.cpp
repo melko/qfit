@@ -1,7 +1,7 @@
 /*
  * main.cpp
  *
- * Copyright (C) 2011 by Paolo Cretaro <lorddarthfener@gmail.com>
+ * Copyright (C) 2011-2012 by Paolo Cretaro <lorddarthfener@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@
 
 using namespace std;
 
-int display_usage(const char* name);
+int display_usage(const char *name);
 int display_version();
 
 int main(int argc, char** argv)
 {
-    char* file_path = NULL;
+    char *file_path = NULL;
     double error = -1;
     FitTools::FitFunction fit_type = FitTools::LINEAR_FIT;
 
@@ -101,7 +101,7 @@ int display_version()
          << "Written by Paolo Cretaro.\n";
     return -1;
 }
-int display_usage(const char* name)
+int display_usage(const char *name)
 {
     cout << "Usage: " << name << " [OPTIONS]... FILE\n\n"
          << "  -h, --help\t\tprint this help\n"
@@ -123,4 +123,4 @@ int display_usage(const char* name)
     return -1;
 }
 
-/* vim: set ts=2 sw=2 et: */
+/* vim: set ts=4 sw=4 et: */
