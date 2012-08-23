@@ -27,7 +27,7 @@
 #include <math.h>
 #include <vector>
 
-#define SQUARE(x) (x)*(x)
+#define SQUARE(x) ((x)*(x))
 
 using namespace std;
 
@@ -44,16 +44,19 @@ public:
         double q, q_error;
         double cov;
         double chi_square;
+        double rss;
     };
 
     struct SlopeFitResult {
         double m, m_error;
         double chi_square;
+        double rss;
     };
 
     struct HorizontalFitResult {
         double q, q_error;
         double chi_square;
+        double rss;
     };
 
     //TODO exponential and logarithmic result

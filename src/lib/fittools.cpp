@@ -196,24 +196,33 @@ int FitTools::_chi_square ( FitTools::FitFunction fit_type )
       case LINEAR_FIT: {
 	LinearFitResult *f = &(_fit_result._linear_result);
 	f->chi_square = 0;
+	f->rss = 0;
 	for (int i = 0; i < (int)_xdata.size(); i++) {
-	  f->chi_square += SQUARE((_ydata.at(i) - f->m * _xdata.at(i) - f->q) / _yerrors.at(i));
+	  double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i) - f->q);
+	  f->chi_square += rs/SQUARE(_yerrors.at(i));
+	  f->rss += rs;
 	}
 	}
 	break;
       case SLOPE_FIT: {
 	LinearFitResult *f = &(_fit_result._linear_result);
 	f->chi_square = 0;
+	f->rss = 0;
 	for (int i = 0; i < (int)_xdata.size(); i++) {
-	f->chi_square += SQUARE((_ydata.at(i) - f->m * _xdata.at(i)) / _yerrors.at(i));
+	  double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i));
+	  f->chi_square += rs/SQUARE(_yerrors.at(i));
+	  f->rss += rs;
 	}
 	}
 	break;
       case HORIZONTAL_FIT: {
 	LinearFitResult *f = &(_fit_result._linear_result);
 	f->chi_square = 0;
+	f->rss = 0;
 	for(int i = 0; i < (int)_xdata.size(); i++) {
-	  f->chi_square += SQUARE((_ydata.at(i) - f->q) / _yerrors.at(i));
+	  double rs = SQUARE(_ydata.at(i) - f->q);
+	  f->chi_square += rs/SQUARE(_yerrors.at(i));
+	  f->rss += rs;
 	}
 	}
 	break;
@@ -244,27 +253,30 @@ int FitTools::printResult(ostream& sout)
 
 int FitTools::_print_linear(ostream& sout)
 {
+    LinearFitResult *f = &(_fit_result._linear_result);
     sout << scientific
-         << "m = " << _fit_result._linear_result.m << "\ts(m) = " << _fit_result._linear_result.m_error << endl
-         << "q = " << _fit_result._linear_result.q << "\ts(q) = " << _fit_result._linear_result.q_error << endl
-         << "cov(m,q) = " << _fit_result._linear_result.cov << endl
-         << "X² = " << _fit_result._linear_result.chi_square << endl;
+         << "m = " << f->m << "\ts(m) = " << f->m_error << endl
+         << "q = " << f->q << "\ts(q) = " << f->q_error << endl
+         << "cov(m,q) = " << f->cov << endl
+         << "X² = " << f->chi_square << "\tRSS = " << f->rss << endl;
     return 0;
 }
 
 int FitTools::_print_slope(ostream& sout)
 {
+    LinearFitResult *f = &(_fit_result._linear_result);
     sout << scientific
-         << "m = " << _fit_result._linear_result.m << "\ts(m) = " << _fit_result._linear_result.m_error << endl
-         << "X2 = " << _fit_result._linear_result.chi_square << endl;
+         << "m = " << f->m << "\ts(m) = " << f->m_error << endl
+         << "X² = " << f->chi_square << "\tRSS = " << f->rss << endl;
     return 0;
 }
 
 int FitTools::_print_horizontal(ostream& sout)
 {
+    LinearFitResult *f = &(_fit_result._linear_result);
     sout << scientific
-         << "q = " << _fit_result._linear_result.q << "\ts(q) = " << _fit_result._linear_result.q_error << endl
-         << "X2 = " << _fit_result._linear_result.chi_square << endl;
+         << "q = " << f->q << "\ts(q) = " << f->q_error << endl
+         << "X² = " << f->chi_square << "\tRSS = " << f->rss << endl;
     return 0;
 }
 
