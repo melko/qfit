@@ -59,21 +59,15 @@ FitTools::FitResult FitTools::Fit()
     switch (_fit_type) {
     case LINEAR_FIT:
         _fit_linear();
-        _chi_square_linear();
         break;
     case SLOPE_FIT:
         _fit_slope();
-        _chi_square_slope();
         break;
     case HORIZONTAL_FIT:
         _fit_horizontal();
-        _chi_square_horizontal();
-        break;
-    case EXPONENTIAL_FIT: //TODO
-    case LOGARITHMIC_FIT: //TODO
         break;
     }
-
+    _chi_square(_fit_type);
     return _fit_result;
 }
 
@@ -194,44 +188,36 @@ vector< double > FitTools::vector_product(const std::vector< double >& v1, const
 }
 
 /*
- * calcola il chi quadro su un'aspettativa lineare
+ * calcola chi quadro in base al modello scelto
  */
-inline int FitTools::_chi_square_linear()
+int FitTools::_chi_square ( FitTools::FitFunction fit_type )
 {
-    _fit_result._linear_result.chi_square = 0;
-
-    for (int i = 0; i < (int)_xdata.size(); i++) {
-        _fit_result._linear_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._linear_result.m * _xdata.at(i) - _fit_result._linear_result.q) / _yerrors.at(i));
+    switch(fit_type){
+      case LINEAR_FIT: {
+	LinearFitResult *f = &(_fit_result._linear_result);
+	f->chi_square = 0;
+	for (int i = 0; i < (int)_xdata.size(); i++) {
+	  f->chi_square += SQUARE((_ydata.at(i) - f->m * _xdata.at(i) - f->q) / _yerrors.at(i));
+	}
+	}
+	break;
+      case SLOPE_FIT: {
+	LinearFitResult *f = &(_fit_result._linear_result);
+	f->chi_square = 0;
+	for (int i = 0; i < (int)_xdata.size(); i++) {
+	f->chi_square += SQUARE((_ydata.at(i) - f->m * _xdata.at(i)) / _yerrors.at(i));
+	}
+	}
+	break;
+      case HORIZONTAL_FIT: {
+	LinearFitResult *f = &(_fit_result._linear_result);
+	f->chi_square = 0;
+	for(int i = 0; i < (int)_xdata.size(); i++) {
+	  f->chi_square += SQUARE((_ydata.at(i) - f->q) / _yerrors.at(i));
+	}
+	}
+	break;
     }
-
-    return 0;
-}
-
-/*
- * calcola il chi quadro su un'aspettativa lineare solo pendenza
- */
-inline int FitTools::_chi_square_slope()
-{
-    _fit_result._linear_result.chi_square = 0;
-
-    for (int i = 0; i < (int)_xdata.size(); i++) {
-        _fit_result._linear_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._linear_result.m * _xdata.at(i)) / _yerrors.at(i));
-    }
-
-    return 0;
-}
-
-/*
- * calcola il chi quadro su un'aspettativa lineare solo altezza
- */
-inline int FitTools::_chi_square_horizontal()
-{
-    _fit_result._linear_result.chi_square = 0;
-
-    for (int i = 0; i < (int)_xdata.size(); i++) {
-        _fit_result._linear_result.chi_square += SQUARE((_ydata.at(i) - _fit_result._linear_result.q) / _yerrors.at(i));
-    }
-
     return 0;
 }
 

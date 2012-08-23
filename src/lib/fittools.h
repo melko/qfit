@@ -95,9 +95,7 @@ private:
     int _fit_slope();
     int _fit_horizontal();
 
-    inline int _chi_square_linear();
-    inline int _chi_square_slope();
-    inline int _chi_square_horizontal();
+    int _chi_square(FitFunction fit_type);
     int _print_linear(ostream& sout);
     int _print_slope(ostream& sout);
     int _print_horizontal(ostream& sout); //TODO print exp and log
