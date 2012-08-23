@@ -97,8 +97,8 @@ void qfit::savePlot()
 {
     QString imageFilter;
     const QList<QByteArray> imageFormats = QImageWriter::supportedImageFormats();
-    if (imageFormats.size() > 0) {
-        for (int i = 0; i < imageFormats.size(); i++) {
+    if(imageFormats.size() > 0) {
+        for(int i = 0; i < imageFormats.size(); i++) {
             imageFilter += "Image ";
             imageFilter += imageFormats[i];
             imageFilter += " (*.";
@@ -112,7 +112,7 @@ void qfit::savePlot()
     imageFilter += ";;File PDF (*.pdf);;File Postscript (*.ps)";
     QString fileName = QFileDialog::getSaveFileName(this, trUtf8("Export"), "",
                        imageFilter, NULL, QFileDialog::DontConfirmOverwrite);
-    if (!fileName.isEmpty()) {
+    if(!fileName.isEmpty()) {
         QwtPlotRenderer renderer;
         renderer.setDiscardFlag(QwtPlotRenderer::DiscardBackground, false);
         renderer.renderDocument(qwtPlot, fileName, QSizeF(300, 200), 85);
@@ -123,7 +123,7 @@ void qfit::savePlot()
 void qfit::toggleCustomError(int state)
 {
     // NOTE: if the box is checked the state is 2
-    if (state)
+    if(state)
         errorValue->setReadOnly(false);
     else
         errorValue->setReadOnly(true);
@@ -131,7 +131,7 @@ void qfit::toggleCustomError(int state)
 
 void qfit::changeFitType(int state)
 {
-    switch (state) {
+    switch(state) {
     case FitTools::LINEAR_FIT:
         fit_type = FitTools::LINEAR_FIT;
         appendLog("Fit Linear set");
@@ -158,29 +158,29 @@ void qfit::changeFitType(int state)
 
 void qfit::startFitClicked()
 {
-    if (filePath->text().isEmpty()) {
+    if(filePath->text().isEmpty()) {
         appendLog("Select a file to open!");
         return;
     }
     double error = -1;
 
     // retrive error from the QLineEdit
-    if (customError->isChecked()) {
+    if(customError->isChecked()) {
         error = errorValue->text().toDouble();
-        if (error <= 0.0) {
+        if(error <= 0.0) {
             appendLog("Custom error is not valid, a default one of 1.0 will be used");
             error = 1;
         }
     }
 
-    if (Data::ReadFile(filePath->text().toLatin1().data(), xdata, ydata, yerrors, error)) {
+    if(Data::ReadFile(filePath->text().toLatin1().data(), xdata, ydata, yerrors, error)) {
         appendLog("Error opening file");
         return;
     }
 
     // start fittools
     delete fit;
-    if (error <= 0)
+    if(error <= 0)
         fit = new FitTools(xdata, ydata, yerrors, fit_type);
     else
         fit = new FitTools(xdata, ydata, error, fit_type);
@@ -199,7 +199,7 @@ int qfit::plotData()
     delete range_plot;
     delete model_plot;
 
-    switch (fit_type) {
+    switch(fit_type) {
     case FitTools::LINEAR_FIT:
     case FitTools::HORIZONTAL_FIT:
     case FitTools::SLOPE_FIT:
@@ -233,7 +233,7 @@ int qfit::plotLinearData()
     range_plot = new QwtPlotIntervalCurve("range");
 
     QVector<QwtIntervalSample> range(xdata.size());
-    for (int i = 0; i < (int)xdata.size(); i++) {
+    for(int i = 0; i < (int)xdata.size(); i++) {
         range[i] = QwtIntervalSample(xdata.at(i), ydata.at(i) - yerrors.at(i), ydata.at(i) + yerrors.at(i));
     }
 
@@ -263,7 +263,7 @@ int qfit::plotLinearData()
 }
 #endif
 
-void qfit::appendLog(const char* c)
+void qfit::appendLog(const char *c)
 {
     logOutput->appendPlainText(trUtf8(c));
 }
@@ -280,7 +280,7 @@ int qfit::setupGui()
 {
 //   if(QApplication::arguments().size() > 1)
 //     filePath->setText(QApplication::arguments().at(1));
-    if (QApplication::argc() == 2) {
+    if(QApplication::argc() == 2) {
         filePath->setText(QApplication::argv()[1]);
     }
     selectFit->addItem(tr("Fit Linear"));/*TODO add once are available in FitTools

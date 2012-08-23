@@ -80,7 +80,7 @@ public:
     FitTools(vector<double> &x_array, vector<double> &y_array, vector<double> &errors_array, FitFunction fit_type);
     FitTools(vector<double> &x_array, vector<double> &y_array, double error, FitFunction fit_type);
 
-    int printResult(ostream& sout);
+    int printResult(ostream &sout);
     FitResult Fit();
 
 private:
@@ -99,9 +99,9 @@ private:
     int _fit_horizontal();
 
     int _chi_square(FitFunction fit_type);
-    int _print_linear(ostream& sout);
-    int _print_slope(ostream& sout);
-    int _print_horizontal(ostream& sout); //TODO print exp and log
+    int _print_linear(ostream &sout);
+    int _print_slope(ostream &sout);
+    int _print_horizontal(ostream &sout); //TODO print exp and log
 };
 
 #endif // FITTOOLS_H

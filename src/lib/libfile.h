@@ -32,7 +32,7 @@ using namespace std;
 class Data
 {
 public:
-    static int ReadFile(char* path, std::vector< double >& xdata, std::vector< double >& ydata, std::vector< double >& yerrors, double err);
+    static int ReadFile(char *path, std::vector< double >& xdata, std::vector< double >& ydata, std::vector< double >& yerrors, double err);
 };
 
 #endif // LIBFILE_H

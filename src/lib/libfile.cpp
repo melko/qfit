@@ -20,7 +20,7 @@
 #include "libfile.h"
 #include <stdlib.h>
 
-int Data::ReadFile(char* path,              /* percorso del file */
+int Data::ReadFile(char *path,              /* percorso del file */
                    vector< double > &xdata,
                    vector< double > &ydata,
                    vector< double > &yerrors,
@@ -28,7 +28,7 @@ int Data::ReadFile(char* path,              /* percorso del file */
 {
     ifstream file(path);
 
-    if (!file.is_open()) {
+    if(!file.is_open()) {
         cerr << "Can't open file\n";
         return(-2);
     }
@@ -38,11 +38,11 @@ int Data::ReadFile(char* path,              /* percorso del file */
     yerrors.clear();
 
     string line;
-    while (getline(file, line)) {
+    while(getline(file, line)) {
         stringstream str(line);
 
         // allow comments in the data file
-        if (!isdigit(line[0]))
+        if(!isdigit(line[0]))
             continue;
 
         double tmp;
@@ -53,7 +53,7 @@ int Data::ReadFile(char* path,              /* percorso del file */
         str >> tmp;
         ydata.push_back(tmp);
 
-        if (err < 0) {
+        if(err < 0) {
             str >> tmp;
             yerrors.push_back(tmp);
         } else

@@ -22,26 +22,26 @@
 
 FitTools::FitTools(std::vector< double > &x_array, std::vector< double > &y_array, std::vector< double > &errors_array, FitTools::FitFunction fit_type)
     : _xdata(x_array),
-    _ydata(y_array),
-    _yerrors(errors_array),
-    _sum_weight(0),
-    _fit_type(fit_type)
+      _ydata(y_array),
+      _yerrors(errors_array),
+      _sum_weight(0),
+      _fit_type(fit_type)
 {
 }
 
 FitTools::FitTools(std::vector< double > &x_array, std::vector< double > &y_array, double error, FitTools::FitFunction fit_type)
     : _xdata(x_array),
-    _ydata(y_array),
-    _yerrors(vector<double>(y_array.size(), error)),
-    _sum_weight(0),
-    _fit_type(fit_type)
+      _ydata(y_array),
+      _yerrors(vector<double>(y_array.size(), error)),
+      _sum_weight(0),
+      _fit_type(fit_type)
 {
 }
 
 int FitTools::_prepare_fit()
 {
     _sum_weight = 0;
-    for (int i = 0; i < (int)_ydata.size(); i++) {
+    for(int i = 0; i < (int)_ydata.size(); i++) {
         _yweights.push_back(SQUARE(1.0 / _yerrors.at(i)));
         _sum_weight += _yweights.at(i);
     }
@@ -56,7 +56,7 @@ FitTools::FitResult FitTools::Fit()
 {
     _prepare_fit();
 
-    switch (_fit_type) {
+    switch(_fit_type) {
     case LINEAR_FIT:
         _fit_linear();
         break;
@@ -150,7 +150,7 @@ double FitTools::mean(const std::vector< double >& data,    /* vettore di cui ca
                       const std::vector< double >& weight)  /* vettore dei pesi */
 {
     double result = 0, sum_weight = 0;
-    for (int i = 0; i < (int)data.size(); i++) {
+    for(int i = 0; i < (int)data.size(); i++) {
         result += data.at(i) * weight.at(i);
         sum_weight += weight.at(i);
     }
@@ -165,7 +165,7 @@ double FitTools::mean(const std::vector< double >& data,    /* vettore di cui ca
 double FitTools::mean(const std::vector< double >& data)
 {
     double result = 0;
-    for (int i = 0; i < (int)data.size(); i++) {
+    for(int i = 0; i < (int)data.size(); i++) {
         result += data.at(i);
     }
 
@@ -180,7 +180,7 @@ vector< double > FitTools::vector_product(const std::vector< double >& v1, const
 {
     vector<double> result(v1.size());
 
-    for (int i = 0; i < (int)v1.size(); i++)
+    for(int i = 0; i < (int)v1.size(); i++)
         result.at(i) = v1.at(i) * v2.at(i);
 
     return result;
@@ -190,42 +190,42 @@ vector< double > FitTools::vector_product(const std::vector< double >& v1, const
 /*
  * calcola chi quadro in base al modello scelto
  */
-int FitTools::_chi_square ( FitTools::FitFunction fit_type )
+int FitTools::_chi_square(FitTools::FitFunction fit_type)
 {
-    switch(fit_type){
-      case LINEAR_FIT: {
-	LinearFitResult *f = &(_fit_result._linear_result);
-	f->chi_square = 0;
-	f->rss = 0;
-	for (int i = 0; i < (int)_xdata.size(); i++) {
-	  double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i) - f->q);
-	  f->chi_square += rs/SQUARE(_yerrors.at(i));
-	  f->rss += rs;
-	}
-	}
-	break;
-      case SLOPE_FIT: {
-	LinearFitResult *f = &(_fit_result._linear_result);
-	f->chi_square = 0;
-	f->rss = 0;
-	for (int i = 0; i < (int)_xdata.size(); i++) {
-	  double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i));
-	  f->chi_square += rs/SQUARE(_yerrors.at(i));
-	  f->rss += rs;
-	}
-	}
-	break;
-      case HORIZONTAL_FIT: {
-	LinearFitResult *f = &(_fit_result._linear_result);
-	f->chi_square = 0;
-	f->rss = 0;
-	for(int i = 0; i < (int)_xdata.size(); i++) {
-	  double rs = SQUARE(_ydata.at(i) - f->q);
-	  f->chi_square += rs/SQUARE(_yerrors.at(i));
-	  f->rss += rs;
-	}
-	}
-	break;
+    switch(fit_type) {
+    case LINEAR_FIT: {
+        LinearFitResult *f = &(_fit_result._linear_result);
+        f->chi_square = 0;
+        f->rss = 0;
+        for(int i = 0; i < (int)_xdata.size(); i++) {
+            double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i) - f->q);
+            f->chi_square += rs / SQUARE(_yerrors.at(i));
+            f->rss += rs;
+        }
+    }
+    break;
+    case SLOPE_FIT: {
+        LinearFitResult *f = &(_fit_result._linear_result);
+        f->chi_square = 0;
+        f->rss = 0;
+        for(int i = 0; i < (int)_xdata.size(); i++) {
+            double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i));
+            f->chi_square += rs / SQUARE(_yerrors.at(i));
+            f->rss += rs;
+        }
+    }
+    break;
+    case HORIZONTAL_FIT: {
+        LinearFitResult *f = &(_fit_result._linear_result);
+        f->chi_square = 0;
+        f->rss = 0;
+        for(int i = 0; i < (int)_xdata.size(); i++) {
+            double rs = SQUARE(_ydata.at(i) - f->q);
+            f->chi_square += rs / SQUARE(_yerrors.at(i));
+            f->rss += rs;
+        }
+    }
+    break;
     }
     return 0;
 }
@@ -233,9 +233,9 @@ int FitTools::_chi_square ( FitTools::FitFunction fit_type )
 /*
  * stampa i risultati su uno stream
  */
-int FitTools::printResult(ostream& sout)
+int FitTools::printResult(ostream &sout)
 {
-    switch (_fit_type) {
+    switch(_fit_type) {
     case FitTools::LINEAR_FIT:
         _print_linear(sout);
         break;
@@ -251,7 +251,7 @@ int FitTools::printResult(ostream& sout)
     return 0;
 }
 
-int FitTools::_print_linear(ostream& sout)
+int FitTools::_print_linear(ostream &sout)
 {
     LinearFitResult *f = &(_fit_result._linear_result);
     sout << scientific
@@ -262,7 +262,7 @@ int FitTools::_print_linear(ostream& sout)
     return 0;
 }
 
-int FitTools::_print_slope(ostream& sout)
+int FitTools::_print_slope(ostream &sout)
 {
     LinearFitResult *f = &(_fit_result._linear_result);
     sout << scientific
@@ -271,7 +271,7 @@ int FitTools::_print_slope(ostream& sout)
     return 0;
 }
 
-int FitTools::_print_horizontal(ostream& sout)
+int FitTools::_print_horizontal(ostream &sout)
 {
     LinearFitResult *f = &(_fit_result._linear_result);
     sout << scientific

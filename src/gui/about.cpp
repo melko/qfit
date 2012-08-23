@@ -75,7 +75,7 @@ About::~About()
 
 }
 
-void About::on_clickLink(const QString& link)
+void About::on_clickLink(const QString &link)
 {
     QDesktopServices::openUrl(QUrl(link));
 }
