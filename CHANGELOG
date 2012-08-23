@@ -1,13 +1,13 @@
-version 0.3.1 (wip) :
-lib :
-- add RSS as new fit result
+version next
+	lib
+		- add RSS as new fit result
 
-version 0.3.0 :
------------------------------
-gui :
-- open file through command line argument
-- install .desktop and .png files
+version 0.3.0
+	- 21 December 2011
+	gui
+		- open file through command line argument
+		- install .desktop and .png files
 
 version 0.2.0
------------------------------
-- initial draft completed
+	- 18 December 2011
+	- initial draft completed
