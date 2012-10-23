@@ -38,7 +38,7 @@ IF( QT4_FOUND )
 		STRING( REGEX MATCH "#define *QWT_VERSION *(0x06*)" QWT_IS_VERSION_6 ${QWT_GLOBAL_H})
 		
 		IF( QWT_IS_VERSION_6 )
-		STRING(REGEX REPLACE ".*#define[\\t\\ ]+QWT_VERSION_STR[\\t\\ ]+\"([0-9]+\\.[0-9]+\\.[0-9]+)\".*" "\\1" Qwt_VERSION "${QWT_GLOBAL_H}")
+		STRING(REGEX REPLACE ".*#define[\\t\\ ]+QWT_VERSION_STR[\\t\\ ]+\"([0-9]+\\.[0-9]+\\.[0-9]+.*)\".*" "\\1" Qwt_VERSION "${QWT_GLOBAL_H}")
 
 		# Find Qwt6 library linked to Qt4
 		FIND_LIBRARY( Qwt6_Qt4_TENTATIVE_LIBRARY NAMES qwt6-qt4 qwt-qt4 qwt6 qwt PATHS /usr/local/qwt/lib /usr/local/lib /usr/local/qwt-6.0.0/lib /usr/lib F:/kde/qwt-6.0.0-rc4/lib ${QT_LIBRARY_DIR} C:/qwt-6.0.0-rc5)
