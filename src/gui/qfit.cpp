@@ -290,28 +290,36 @@ int qfit::setupGui()
   selectFit->addItem(tr("Fit Logarithmic"));*/
 
 #ifdef Qwt6_FOUND
+    // the latest version of qwt now returns a QWidget when asking for the canvas
+    QwtPlotCanvas *canvas = (QwtPlotCanvas*) qwtPlot->canvas();
+
     // plot stuff
     // panning with the middle mouse button
-    QwtPlotPanner *panner = new QwtPlotPanner(qwtPlot->canvas());
+    QwtPlotPanner *panner = new QwtPlotPanner(canvas);
     panner->setMouseButton(Qt::MidButton);
     // zoom in/out with the wheel
-    (void) new QwtPlotMagnifier(qwtPlot->canvas());
+    (void) new QwtPlotMagnifier(canvas);
     // zoom an area with left button
-    QwtPlotZoomer *zoomer = new QwtPlotZoomer(qwtPlot->canvas());
+    QwtPlotZoomer *zoomer = new QwtPlotZoomer(canvas);
     zoomer->setRubberBandPen(QColor(Qt::black));
     zoomer->setTrackerPen(QColor(Qt::black));
     zoomer->setMousePattern(QwtEventPattern::MouseSelect2, Qt::RightButton, Qt::ControlModifier);
     zoomer->setMousePattern(QwtEventPattern::MouseSelect3, Qt::RightButton);
 
     // canvas
-    qwtPlot->canvas()->setLineWidth(1);
-    qwtPlot->canvas()->setFrameStyle(QFrame::Box | QFrame::Plain);
-    qwtPlot->canvas()->setBorderRadius(10);
-    qwtPlot->canvas()->setPalette(Qt::darkGray);
+    canvas->setLineWidth(1);
+    canvas->setFrameStyle(QFrame::Box | QFrame::Plain);
+    canvas->setStyleSheet(
+        "border: 2px solid Black;"
+        "border-radius: 10px;"
+        "background-color: qlineargradient( x1: 0, y1: 0, x2: 0, y2: 1,"
+            "stop: 0 LemonChiffon, stop: 1 PaleGoldenrod );"
+    );
+
     //grid
     QwtPlotGrid *grid = new QwtPlotGrid();
-    grid->setMajPen(QPen(Qt::white, 0, Qt::DotLine));
-//   grid->setMinPen(QPen(Qt::gray, 0, Qt::DotLine));
+    grid->setMajorPen(QPen(Qt::gray, 0, Qt::DotLine));
+//   grid->setMinorPen(QPen(Qt::gray, 0, Qt::DotLine));
     grid->attach(qwtPlot);
 #endif
 
