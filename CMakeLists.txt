@@ -8,16 +8,30 @@ set(QFIT_VERSION_PATCH 0)
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -g")
 
+include(FeatureSummary)
 option(WITH_GUI "Build the Qt interface" ON)
 option(WITH_QWT "Build GUI with the plot Widget" ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
 find_package(Qt4)
-if(WITH_GUI AND WITH_QWT)
-	find_package(Qwt6 REQUIRED)
-endif(WITH_GUI AND WITH_QWT)
+set_package_properties(Qt4 PROPERTIES
+	TYPE RECOMMENDED
+	PURPOSE "Required for the GUI")
+if(NOT QT4_FOUND)
+	set(WITH_GUI OFF)
+endif(NOT QT4_FOUND)
+
+find_package(Qwt6)
+set_package_properties(Qwt6 PROPERTIES
+	TYPE OPTIONAL
+	PURPOSE "Required for the plotting widget")
+if(NOT Qwt6_FOUND)
+	set(WITH_QWT OFF)
+endif(NOT Qwt6_FOUND)
 
 add_subdirectory(src)
+
+feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 
 # CPack vars

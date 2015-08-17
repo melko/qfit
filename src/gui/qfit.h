@@ -26,7 +26,7 @@
 #include <QString>
 #include <QtGui/QWidget>
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
 #include <qwt_plot_curve.h>
 #include <qwt_plot_intervalcurve.h>
 
@@ -43,7 +43,7 @@ public:
     virtual ~qfit();
     int printResult();
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     int plotData();
 #endif
 
@@ -56,7 +56,7 @@ public slots:
     void cleanLog();
     void displayInfo();
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     void savePlot();
 #endif
 
@@ -67,7 +67,7 @@ private:
     FitTools *fit;
     FitTools::FitFunction fit_type;
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     QwtPlotCurve *data_plot;
     QwtPlotIntervalCurve *range_plot;
     QwtPlotCurve *model_plot;

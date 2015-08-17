@@ -5,6 +5,6 @@
 #define QFIT_VERSION_MINOR ${QFIT_VERSION_MINOR}
 #define QFIT_VERSION_PATCH ${QFIT_VERSION_PATCH}
 #cmakedefine WITH_GUI
-#cmakedefine Qwt6_FOUND
+#cmakedefine WITH_QWT
 
 #endif

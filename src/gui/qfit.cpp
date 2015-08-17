@@ -33,7 +33,7 @@
 #include <QtGui/QImageWriter>
 #include <QtGui/QFileDialog>
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_panner.h>
 #include <qwt_plot_renderer.h>
@@ -48,7 +48,7 @@ qfit::qfit()
 {
     fit_type = FitTools::LINEAR_FIT;
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     data_plot = NULL;
     range_plot = NULL;
     model_plot = NULL;
@@ -68,7 +68,7 @@ qfit::qfit()
     connect(cleanLogButton, SIGNAL(clicked(bool)), this, SLOT(cleanLog()));
     connect(infoButton, SIGNAL(clicked(bool)), this, SLOT(displayInfo()));
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     connect(savePlotButton, SIGNAL(clicked(bool)), this, SLOT(savePlot()));
 #endif
 }
@@ -92,7 +92,7 @@ void qfit::displayInfo()
     about->exec();
 }
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
 void qfit::savePlot()
 {
     QString imageFilter;
@@ -187,12 +187,12 @@ void qfit::startFitClicked()
     fit->Fit();
     printResult();
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     plotData();
 #endif
 }
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
 int qfit::plotData()
 {
     delete data_plot;
@@ -217,9 +217,7 @@ int qfit::plotData()
     savePlotButton->setEnabled(true);
     return(0);
 }
-#endif
 
-#ifdef Qwt6_FOUND
 int qfit::plotLinearData()
 {
     /* standard data */
@@ -289,7 +287,7 @@ int qfit::setupGui()
   selectFit->addItem(tr("Fit Exponential"));
   selectFit->addItem(tr("Fit Logarithmic"));*/
 
-#ifdef Qwt6_FOUND
+#ifdef WITH_QWT
     // the latest version of qwt now returns a QWidget when asking for the canvas
     QwtPlotCanvas *canvas = (QwtPlotCanvas*) qwtPlot->canvas();
 
@@ -321,6 +319,9 @@ int qfit::setupGui()
     grid->setMajorPen(QPen(Qt::gray, 0, Qt::DotLine));
 //   grid->setMinorPen(QPen(Qt::gray, 0, Qt::DotLine));
     grid->attach(qwtPlot);
+
+    // save button tooltip
+    savePlotButton->setToolTip(trUtf8("Save plot"));
 #endif
 
     // tooltips
@@ -329,10 +330,6 @@ int qfit::setupGui()
     selectFit->setToolTip(trUtf8("Fit typology"));
     startFit->setToolTip(trUtf8("GO!"));
     cleanLogButton->setToolTip(trUtf8("Clear log"));
-
-#ifdef Qwt6_FOUND
-    savePlotButton->setToolTip(trUtf8("Save plot"));
-#endif
 
     return(0);
 }

@@ -1,18 +1,19 @@
-include_directories(${QT_INCLUDES} ${Qwt6_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(qfit_SRCS about.cpp qfit.cpp main.cpp)
 qt4_automoc(${qfit_SRCS})
 
-if(Qwt6_FOUND AND Qwt_VERSION VERSION_LESS 6.0.0)
+if(WITH_QWT AND Qwt_VERSION VERSION_LESS 6.0.0)
 	MESSAGE(FATAL_ERROR "Your Qwt version is too old (you have ${Qwt_VERSION} but at least 6.0.0 is needed), please upgrade or set the WITH_QWT flag to false")
-endif(Qwt6_FOUND AND Qwt_VERSION VERSION_LESS 6.0.0)
+endif(WITH_QWT AND Qwt_VERSION VERSION_LESS 6.0.0)
 
-if(Qwt6_FOUND)
+if(WITH_QWT)
+	include_directories(${Qwt6_INCLUDE_DIR})
 	set(qfit_ui maindialog.ui)
-else(Qwt6_FOUND)
+else(WITH_QWT)
 	set(qfit_ui maindialog_noqwt.ui)
 	message(WARNING "QFit will be built without the plot widget")
-endif(Qwt6_FOUND)
+endif(WITH_QWT)
 
 qt4_wrap_ui(qfit_SRCS ${qfit_ui})
 
