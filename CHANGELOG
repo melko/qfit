@@ -1,6 +1,13 @@
 version next
+	build system
+		- use FeaturySummary to display required/suggested deps
+		- change internal behaviour of build flags
 	lib
 		- add RSS as new fit result
+	gui
+		- fix against latest qwt6 API break (tested on qwt-6.1.2)
+	new features
+		- trapezoidal integration
 
 version 0.3.0
 	- 21 December 2011
