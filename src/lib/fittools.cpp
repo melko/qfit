@@ -38,6 +38,9 @@ FitTools::FitTools(std::vector< double > &x_array, std::vector< double > &y_arra
 {
 }
 
+/*
+ * crea l'array dei pesi come 1/yerr^2
+ */
 int FitTools::_prepare_fit()
 {
     _sum_weight = 0;
@@ -54,18 +57,23 @@ int FitTools::_prepare_fit()
 */
 FitTools::FitResult FitTools::Fit()
 {
-    _prepare_fit();
 
     switch(_fit_type) {
-    case LINEAR_FIT:
-        _fit_linear();
-        break;
-    case SLOPE_FIT:
-        _fit_slope();
-        break;
-    case HORIZONTAL_FIT:
-        _fit_horizontal();
-        break;
+        case LINEAR_FIT:
+            _prepare_fit();
+            _fit_linear();
+            break;
+        case SLOPE_FIT:
+            _prepare_fit();
+            _fit_slope();
+            break;
+        case HORIZONTAL_FIT:
+            _prepare_fit();
+            _fit_horizontal();
+            break;
+        case TRAP_INTEGRATION:
+            _trap_integration();
+            break;
     }
     _chi_square(_fit_type);
     return _fit_result;
@@ -91,7 +99,6 @@ int FitTools::_fit_linear()
     _fit_result._linear_result.q_error = _fit_result._linear_result.m_error * sqrt(x2_mean);
     _fit_result._linear_result.cov = -x_mean / ((x2_mean - x_mean * x_mean) * _sum_weight);
 
-    this->_fit_type = LINEAR_FIT;
     return 0;
 }
 
@@ -110,6 +117,21 @@ int FitTools::_fit_slope()
 int FitTools::_fit_horizontal()
 {
     //TODO
+    return 0;
+}
+
+/*
+ * integrazione col metodo dei trapezi
+ */
+int FitTools::_trap_integration()
+{
+    double area = 0;
+
+    for(unsigned i = 0; i < (_xdata.size() - 1); i++) {
+        area += 0.5 * (_ydata.at(i) + _ydata.at(i+1)) * (_xdata.at(i+1) - _xdata.at(i));
+    }
+    _fit_result._trap_integration_result.area = area;
+
     return 0;
 }
 
@@ -143,48 +165,11 @@ FitTools::HorizontalFitResult FitTools::getHorizontalResult()
     return ris;
 }
 
-/*
- * calcola la media pesata di un vettore
- */
-double FitTools::mean(const std::vector< double >& data,    /* vettore di cui calcolare la media */
-                      const std::vector< double >& weight)  /* vettore dei pesi */
+FitTools::TrapIntegrationResult FitTools::getTrapIntegrationResult()
 {
-    double result = 0, sum_weight = 0;
-    for(int i = 0; i < (int)data.size(); i++) {
-        result += data.at(i) * weight.at(i);
-        sum_weight += weight.at(i);
-    }
-
-    return result / sum_weight;
-
-}
-
-/*
- * calcola la media aritmetica di un vettore
- */
-double FitTools::mean(const std::vector< double >& data)
-{
-    double result = 0;
-    for(int i = 0; i < (int)data.size(); i++) {
-        result += data.at(i);
-    }
-
-    return result / data.size();
-}
-
-/*
- * calcola un vettore le cui componenti sono il prodotto delle componenti dei
- * vettori in entrata
- */
-vector< double > FitTools::vector_product(const std::vector< double >& v1, const std::vector< double >& v2)
-{
-    vector<double> result(v1.size());
-
-    for(int i = 0; i < (int)v1.size(); i++)
-        result.at(i) = v1.at(i) * v2.at(i);
-
-    return result;
-
+    TrapIntegrationResult ris;
+    ris.area = _fit_result._trap_integration_result.area;
+    return ris;
 }
 
 /*
@@ -193,39 +178,41 @@ vector< double > FitTools::vector_product(const std::vector< double >& v1, const
 int FitTools::_chi_square(FitTools::FitFunction fit_type)
 {
     switch(fit_type) {
-    case LINEAR_FIT: {
-        LinearFitResult *f = &(_fit_result._linear_result);
-        f->chi_square = 0;
-        f->rss = 0;
-        for(int i = 0; i < (int)_xdata.size(); i++) {
-            double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i) - f->q);
-            f->chi_square += rs / SQUARE(_yerrors.at(i));
-            f->rss += rs;
+        case LINEAR_FIT: {
+            LinearFitResult *f = &(_fit_result._linear_result);
+            f->chi_square = 0;
+            f->rss = 0;
+            for(int i = 0; i < (int)_xdata.size(); i++) {
+                double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i) - f->q);
+                f->chi_square += rs / SQUARE(_yerrors.at(i));
+                f->rss += rs;
+            }
+            break;
         }
-    }
-    break;
-    case SLOPE_FIT: {
-        LinearFitResult *f = &(_fit_result._linear_result);
-        f->chi_square = 0;
-        f->rss = 0;
-        for(int i = 0; i < (int)_xdata.size(); i++) {
-            double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i));
-            f->chi_square += rs / SQUARE(_yerrors.at(i));
-            f->rss += rs;
+        case SLOPE_FIT: {
+            LinearFitResult *f = &(_fit_result._linear_result);
+            f->chi_square = 0;
+            f->rss = 0;
+            for(int i = 0; i < (int)_xdata.size(); i++) {
+                double rs = SQUARE(_ydata.at(i) - f->m * _xdata.at(i));
+                f->chi_square += rs / SQUARE(_yerrors.at(i));
+                f->rss += rs;
+            }
+            break;
         }
-    }
-    break;
-    case HORIZONTAL_FIT: {
-        LinearFitResult *f = &(_fit_result._linear_result);
-        f->chi_square = 0;
-        f->rss = 0;
-        for(int i = 0; i < (int)_xdata.size(); i++) {
-            double rs = SQUARE(_ydata.at(i) - f->q);
-            f->chi_square += rs / SQUARE(_yerrors.at(i));
-            f->rss += rs;
+        case HORIZONTAL_FIT: {
+            LinearFitResult *f = &(_fit_result._linear_result);
+            f->chi_square = 0;
+            f->rss = 0;
+            for(int i = 0; i < (int)_xdata.size(); i++) {
+                double rs = SQUARE(_ydata.at(i) - f->q);
+                f->chi_square += rs / SQUARE(_yerrors.at(i));
+                f->rss += rs;
+            }
+            break;
         }
-    }
-    break;
+        default:
+            return -1;
     }
     return 0;
 }
@@ -236,17 +223,22 @@ int FitTools::_chi_square(FitTools::FitFunction fit_type)
 int FitTools::printResult(ostream &sout)
 {
     switch(_fit_type) {
-    case FitTools::LINEAR_FIT:
-        _print_linear(sout);
-        break;
-    case FitTools::SLOPE_FIT:
-        _print_slope(sout);
-    case FitTools::HORIZONTAL_FIT:
-        _print_horizontal(sout);
-    case FitTools::EXPONENTIAL_FIT: //TODO
-    case FitTools::LOGARITHMIC_FIT:
-        return 0;
-        break;
+        case FitTools::LINEAR_FIT:
+            _print_linear(sout);
+            break;
+        case FitTools::SLOPE_FIT:
+            _print_slope(sout);
+            break;
+        case FitTools::HORIZONTAL_FIT:
+            _print_horizontal(sout);
+            break;
+        case FitTools::TRAP_INTEGRATION:
+            _print_int_trap_integration(sout);
+            break;
+        case FitTools::EXPONENTIAL_FIT: //TODO
+        case FitTools::LOGARITHMIC_FIT:
+            return 0;
+            break;
     }
     return 0;
 }
@@ -277,6 +269,14 @@ int FitTools::_print_horizontal(ostream &sout)
     sout << scientific
          << "q = " << f->q << "\ts(q) = " << f->q_error << endl
          << "X² = " << f->chi_square << "\tRSS = " << f->rss << endl;
+    return 0;
+}
+
+int FitTools::_print_int_trap_integration(ostream &sout)
+{
+    TrapIntegrationResult *f = &(_fit_result._trap_integration_result);
+    sout << scientific
+         << "Area = " << f->area << endl;
     return 0;
 }
 

@@ -152,6 +152,11 @@ void qfit::changeFitType(int state)
         fit_type = FitTools::LOGARITHMIC_FIT;
         appendLog("Fit Logarithmic set");
         break;
+    case FitTools::TRAP_INTEGRATION:
+        fit_type = FitTools::TRAP_INTEGRATION;
+        appendLog("Trapezoidal Integration set");
+        appendLog("WARNING: data is not sorted when calculating the area!");
+        break;
     }
 }
 
@@ -199,13 +204,17 @@ int qfit::plotData()
     delete range_plot;
     delete model_plot;
 
+    plotScatter();
+
     switch(fit_type) {
     case FitTools::LINEAR_FIT:
     case FitTools::HORIZONTAL_FIT:
     case FitTools::SLOPE_FIT:
-        plotLinearData();
+        plotLinearModel();
         break;
         //TODO fare gli altri casi
+    case FitTools::TRAP_INTEGRATION:
+        break;
     case FitTools::EXPONENTIAL_FIT:
     case FitTools::LOGARITHMIC_FIT:
         return(1);
@@ -218,12 +227,12 @@ int qfit::plotData()
     return(0);
 }
 
-int qfit::plotLinearData()
+int qfit::plotScatter()
 {
     /* standard data */
     data_plot = new QwtPlotCurve("data");
     data_plot->setSamples(&xdata.at(0), &ydata.at(0), xdata.size());
-    data_plot->setSymbol(new QwtSymbol(QwtSymbol::XCross, Qt::NoBrush, QPen(Qt::black), QSize(8, 8)));
+    data_plot->setSymbol(new QwtSymbol(QwtSymbol::Ellipse, QBrush(Qt::black), QPen(Qt::black), QSize(8, 8)));
     data_plot->setStyle(QwtPlotCurve::NoCurve);
     data_plot->setRenderHint(QwtPlotItem::RenderAntialiased);
 
@@ -241,24 +250,30 @@ int qfit::plotLinearData()
     range_plot->setSymbol(errorbar);
     range_plot->setStyle(QwtPlotIntervalCurve::NoCurve);
 
-    /* model */
-    FitTools::LinearFitResult tmp = fit->getLinearResult();
+    data_plot->attach(qwtPlot);
+    range_plot->attach(qwtPlot);
+    return(0);
+}
+
+int qfit::plotLinearModel()
+{
+    FitTools::LinearFitResult model = fit->getLinearResult();
     double x[2], y[2];
-    x[0] = xdata.at(0);
-    x[1] = xdata.back();
-    y[0] = tmp.m * x[0] + tmp.q;
-    y[1] = tmp.m * x[1] + tmp.q;
+    pair< int, int> minmax_pair = FitTools::minmax_index(xdata);
+    x[0] = xdata.at(minmax_pair.first);
+    x[1] = xdata.at(minmax_pair.second);
+    y[0] = model.m * x[0] + model.q;
+    y[1] = model.m * x[1] + model.q;
 
     model_plot = new QwtPlotCurve("y=mx+q");
     model_plot->setSamples(x, y, 2);
     model_plot->setPen(QPen(Qt::red, 1));
     model_plot->setRenderHint(QwtPlotItem::RenderAntialiased);
 
-    data_plot->attach(qwtPlot);
-    range_plot->attach(qwtPlot);
     model_plot->attach(qwtPlot);
     return(0);
 }
+
 #endif
 
 void qfit::appendLog(const char *c)
@@ -281,11 +296,13 @@ int qfit::setupGui()
     if(QApplication::argc() == 2) {
         filePath->setText(QApplication::argv()[1]);
     }
-    selectFit->addItem(tr("Fit Linear"));/*TODO add once are available in FitTools
-  selectFit->addItem(tr("Fit Slope"));
-  selectFit->addItem(tr("Fit Horizontal"));
-  selectFit->addItem(tr("Fit Exponential"));
-  selectFit->addItem(tr("Fit Logarithmic"));*/
+    selectFit->addItem(tr("Fit Linear"));
+    selectFit->addItem(tr("Trapezoidal Integration"));
+    /*TODO add once are available in FitTools
+    selectFit->addItem(tr("Fit Slope"));
+    selectFit->addItem(tr("Fit Horizontal"));
+    selectFit->addItem(tr("Fit Exponential"));
+    selectFit->addItem(tr("Fit Logarithmic"));*/
 
 #ifdef WITH_QWT
     // the latest version of qwt now returns a QWidget when asking for the canvas

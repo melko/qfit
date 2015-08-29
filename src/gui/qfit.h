@@ -71,7 +71,8 @@ private:
     QwtPlotCurve *data_plot;
     QwtPlotIntervalCurve *range_plot;
     QwtPlotCurve *model_plot;
-    int plotLinearData();
+    int plotScatter();
+    int plotLinearModel();
 #endif
 
     int setupGui();
