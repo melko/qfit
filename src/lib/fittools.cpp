@@ -74,6 +74,9 @@ FitTools::FitResult FitTools::Fit()
         case TRAP_INTEGRATION:
             _trap_integration();
             break;
+        default:
+            throw invalid_argument("Invalid fit type");
+            break;
     }
     _chi_square(_fit_type);
     return _fit_result;
