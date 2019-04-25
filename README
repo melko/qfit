@@ -28,7 +28,7 @@ WITH_GUI=OFF	to build just the cli
 WITH_QWT=OFF	to build without the plot Widget
 
 example:
-$ cmake -D USE_GUI=OFF ..
+$ cmake -D WITH_GUI=OFF ..
 
 *WARNING*
 A lot of distributions like Ubuntu, Fedora & co split headers from libraries,
