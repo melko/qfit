@@ -22,12 +22,12 @@
 #include "about.h"
 
 #include <fitconfig.h>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QTextEdit>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QTextEdit>
 #include <QtGui/QPixmap>
-#include <QtGui/QSpacerItem>
+#include <QtWidgets/QSpacerItem>
 #include <QtGui/QDesktopServices>
 #include <QtCore/QUrl>
 

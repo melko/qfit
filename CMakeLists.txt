@@ -13,21 +13,21 @@ option(WITH_GUI "Build the Qt interface" ON)
 option(WITH_QWT "Build GUI with the plot Widget" ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
-find_package(Qt4)
-set_package_properties(Qt4 PROPERTIES
+find_package(Qt5 COMPONENTS Widgets)
+set_package_properties(Qt5 PROPERTIES
 	TYPE RECOMMENDED
 	PURPOSE "Required for the GUI")
-if(NOT QT4_FOUND)
+if(NOT Qt5Widgets_FOUND)
 	set(WITH_GUI OFF)
-endif(NOT QT4_FOUND)
+endif(NOT Qt5Widgets_FOUND)
 
-find_package(Qwt6)
-set_package_properties(Qwt6 PROPERTIES
+find_package(Qwt)
+set_package_properties(Qwt PROPERTIES
 	TYPE OPTIONAL
 	PURPOSE "Required for the plotting widget")
-if(NOT Qwt6_FOUND)
+if(NOT QWT_FOUND)
 	set(WITH_QWT OFF)
-endif(NOT Qwt6_FOUND)
+endif(NOT QWT_FOUND)
 
 add_subdirectory(src)
 

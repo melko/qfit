@@ -26,12 +26,12 @@
 #include <fittools.h>
 
 #include <vector>
-#include <QtGui/QLabel>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QAction>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QAction>
 #include <QtGui/QImageWriter>
-#include <QtGui/QFileDialog>
+#include <QtWidgets/QFileDialog>
 
 #ifdef WITH_QWT
 #include <qwt_plot_canvas.h>
@@ -293,8 +293,8 @@ int qfit::setupGui()
 {
 //   if(QApplication::arguments().size() > 1)
 //     filePath->setText(QApplication::arguments().at(1));
-    if(QApplication::argc() == 2) {
-        filePath->setText(QApplication::argv()[1]);
+    if(QCoreApplication::arguments().size() > 1) {
+        filePath->setText(QCoreApplication::arguments().at(1));
     }
     selectFit->addItem(tr("Fit Linear"));
     selectFit->addItem(tr("Trapezoidal Integration"));

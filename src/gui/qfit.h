@@ -24,7 +24,7 @@
 #include <fittools.h>
 
 #include <QString>
-#include <QtGui/QWidget>
+#include <QtWidgets/QWidget>
 
 #ifdef WITH_QWT
 #include <qwt_plot_curve.h>
