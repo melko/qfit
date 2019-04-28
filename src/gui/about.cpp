@@ -80,6 +80,4 @@ void About::on_clickLink(const QString &link)
     QDesktopServices::openUrl(QUrl(link));
 }
 
-#include "about.moc"
-
 /* vim: set ts=4 sw=4 et: */

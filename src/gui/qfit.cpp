@@ -351,6 +351,4 @@ int qfit::setupGui()
     return(0);
 }
 
-#include "qfit.moc"
-
 /* vim: set ts=4 sw=4 et: */
