@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
 
 project(qfit VERSION 0.3.1)
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -g")
+add_compile_options(-Wall -Wextra)
 
 include(FeatureSummary)
 option(WITH_GUI "Build the Qt interface" ON)
