@@ -3,12 +3,15 @@ cmake_minimum_required(VERSION 3.0)
 project(qfit VERSION 0.3.1)
 
 add_compile_options(-Wall -Wextra)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 include(FeatureSummary)
 option(WITH_GUI "Build the Qt interface" ON)
 option(WITH_QWT "Build GUI with the plot Widget" ON)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
+
 find_package(Qt5 COMPONENTS Widgets)
 set_package_properties(Qt5 PROPERTIES
 	TYPE RECOMMENDED
