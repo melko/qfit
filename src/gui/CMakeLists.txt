@@ -19,7 +19,11 @@ endif(WITH_QWT)
 set(qfit_resources resources.qrc)
 
 add_executable(qfit ${qfit_SRCS} ${qfit_ui} ${qfit_resources})
-target_link_libraries(qfit Qt5::Widgets ${QWT_LIBRARY} qfit::fit)
+target_link_libraries(qfit Qt5::Widgets qfit::fit)
+
+if(QWT_FOUND)
+	target_link_libraries(qfit ${QWT_LIBRARY})
+endif(QWT_FOUND)
 
 install(TARGETS qfit DESTINATION bin)
 install(FILES qfit.desktop DESTINATION share/applications)
