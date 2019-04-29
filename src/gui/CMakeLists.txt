@@ -9,7 +9,6 @@ if(WITH_QWT AND QWT_VERSION_STR VERSION_LESS 6.0.0)
 endif(WITH_QWT AND QWT_VERSION_STR VERSION_LESS 6.0.0)
 
 if(WITH_QWT)
-	include_directories(${QWT_INCLUDE_DIR})
 	set(qfit_ui maindialog.ui)
 else(WITH_QWT)
 	set(qfit_ui maindialog_noqwt.ui)
@@ -22,7 +21,7 @@ add_executable(qfit ${qfit_SRCS} ${qfit_ui} ${qfit_resources})
 target_link_libraries(qfit Qt5::Widgets qfit::fit)
 
 if(QWT_FOUND)
-	target_link_libraries(qfit ${QWT_LIBRARY})
+	target_link_libraries(qfit qwt::qwt)
 endif(QWT_FOUND)
 
 install(TARGETS qfit DESTINATION bin)

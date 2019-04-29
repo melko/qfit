@@ -16,17 +16,17 @@ find_package(Qt5 COMPONENTS Widgets)
 set_package_properties(Qt5 PROPERTIES
 	TYPE RECOMMENDED
 	PURPOSE "Required for the GUI")
-if(NOT Qt5Widgets_FOUND)
+if(NOT TARGET Qt5::Widgets)
 	set(WITH_GUI OFF)
-endif(NOT Qt5Widgets_FOUND)
+endif(NOT TARGET Qt5::Widgets)
 
 find_package(Qwt)
 set_package_properties(Qwt PROPERTIES
 	TYPE OPTIONAL
 	PURPOSE "Required for the plotting widget")
-if(NOT QWT_FOUND)
+if(NOT TARGET qwt::qwt)
 	set(WITH_QWT OFF)
-endif(NOT QWT_FOUND)
+endif(NOT TARGET qwt::qwt)
 
 add_subdirectory(src)
 
