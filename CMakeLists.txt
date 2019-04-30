@@ -20,7 +20,7 @@ if(NOT TARGET Qt5::Widgets)
 	set(WITH_GUI OFF)
 endif(NOT TARGET Qt5::Widgets)
 
-find_package(Qwt)
+find_package(Qwt 6)
 set_package_properties(Qwt PROPERTIES
 	TYPE OPTIONAL
 	PURPOSE "Required for the plotting widget")
