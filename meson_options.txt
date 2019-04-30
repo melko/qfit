@@ -1,0 +1,2 @@
+option('WITH_GUI', type : 'feature', yield : true, description : 'Build the Qt interface')
+option('WITH_QWT', type : 'feature', yield : true, description : 'Build GUI with the plot Widget')
