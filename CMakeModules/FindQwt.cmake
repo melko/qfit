@@ -6,9 +6,11 @@
 #
 # Once run this will define:
 #
-# Qwt_FOUND       = system has Qwt lib
-# Qwt_LIBRARY     = full path to the Qwt library
-# Qwt_INCLUDE_DIR = where to find headers
+# Qwt_FOUND          = system has Qwt lib
+# Qwt_LIBRARY        = full path to the Qwt library
+# Qwt_INCLUDE_DIR    = where to find headers
+# Qwt_VERSION_STRING = version string from Qwt header file
+# Qwt_VERSION        = version string (for compatibility with meson)
 #
 
 
