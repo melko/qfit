@@ -14,18 +14,18 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules")
 
 find_package(Qt5 COMPONENTS Widgets)
 set_package_properties(Qt5 PROPERTIES
-	TYPE RECOMMENDED
-	PURPOSE "Required for the GUI")
+                       TYPE RECOMMENDED
+                       PURPOSE "Required for the GUI")
 if(NOT TARGET Qt5::Widgets)
-	set(WITH_GUI OFF)
+  set(WITH_GUI OFF)
 endif(NOT TARGET Qt5::Widgets)
 
 find_package(Qwt 6)
 set_package_properties(Qwt PROPERTIES
-	TYPE OPTIONAL
-	PURPOSE "Required for the plotting widget")
+                       TYPE OPTIONAL
+                       PURPOSE "Required for the plotting widget")
 if(NOT TARGET qwt::qwt)
-	set(WITH_QWT OFF)
+  set(WITH_QWT OFF)
 endif(NOT TARGET qwt::qwt)
 
 add_subdirectory(src)
@@ -43,9 +43,9 @@ set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
 set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/README)
 
 set(CPACK_SOURCE_IGNORE_FILES
-	".git*"
-	".kdev4"
-	"qfit.kdev4"
-	"${CMAKE_CURRENT_SOURCE_DIR}/build")
+    ".git*"
+    ".kdev4"
+    "qfit.kdev4"
+    "${CMAKE_CURRENT_SOURCE_DIR}/build")
 
 include(CPack)
