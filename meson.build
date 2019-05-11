@@ -1,4 +1,4 @@
-project('qfit', 'cpp', version: '0.3.1', license: 'GPL3')
+project('qfit', 'cpp', version: '0.4.0', license: 'GPL3')
 
 qt5_dep = dependency(
     'qt5',

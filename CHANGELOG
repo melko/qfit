@@ -1,6 +1,8 @@
-version x.x.x
+version 0.4.0
 	gui
 		- port to Qt5
+	others
+		- add meson build files
 version 0.3.1
 	- 29 August 2015
 	build system

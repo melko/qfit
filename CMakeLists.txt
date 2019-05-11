@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(qfit VERSION 0.3.1)
+project(qfit VERSION 0.4.0)
 
 add_compile_options(-Wall -Wextra)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
