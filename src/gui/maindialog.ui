@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>qfit</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
