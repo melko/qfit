@@ -78,7 +78,7 @@ qfit::~qfit()
 
 void qfit::openFile()
 {
-    filePath->setText(QFileDialog::getOpenFileName(this, tr("Open"), "", trUtf8("Text File (*.txt);;All Files (*)")));
+    filePath->setText(QFileDialog::getOpenFileName(this, tr("Open"), "", tr("Text File (*.txt);;All Files (*)")));
 }
 
 void qfit::cleanLog()
@@ -110,7 +110,7 @@ void qfit::savePlot()
     imageFilter += "File SVG (*.svg)";
 #endif
     imageFilter += ";;File PDF (*.pdf);;File Postscript (*.ps)";
-    QString fileName = QFileDialog::getSaveFileName(this, trUtf8("Export"), "",
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export"), "",
                        imageFilter, NULL, QFileDialog::DontConfirmOverwrite);
     if(!fileName.isEmpty()) {
         QwtPlotRenderer renderer;
@@ -278,7 +278,7 @@ int qfit::plotLinearModel()
 
 void qfit::appendLog(const char *c)
 {
-    logOutput->appendPlainText(trUtf8(c));
+    logOutput->appendPlainText(tr(c));
 }
 
 int qfit::printResult()
@@ -311,7 +311,7 @@ int qfit::setupGui()
     // plot stuff
     // panning with the middle mouse button
     QwtPlotPanner *panner = new QwtPlotPanner(canvas);
-    panner->setMouseButton(Qt::MidButton);
+    panner->setMouseButton(Qt::MiddleButton);
     // zoom in/out with the wheel
     (void) new QwtPlotMagnifier(canvas);
     // zoom an area with left button
@@ -338,15 +338,15 @@ int qfit::setupGui()
     grid->attach(qwtPlot);
 
     // save button tooltip
-    savePlotButton->setToolTip(trUtf8("Save plot"));
+    savePlotButton->setToolTip(tr("Save plot"));
 #endif
 
     // tooltips
-    infoButton->setToolTip(trUtf8("About"));
-    openFileButton->setToolTip(trUtf8("Open file"));
-    selectFit->setToolTip(trUtf8("Fit typology"));
-    startFit->setToolTip(trUtf8("GO!"));
-    cleanLogButton->setToolTip(trUtf8("Clear log"));
+    infoButton->setToolTip(tr("About"));
+    openFileButton->setToolTip(tr("Open file"));
+    selectFit->setToolTip(tr("Fit typology"));
+    startFit->setToolTip(tr("GO!"));
+    cleanLogButton->setToolTip(tr("Clear log"));
 
     return(0);
 }
