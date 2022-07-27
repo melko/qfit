@@ -21,6 +21,7 @@ add_executable(qfit
 target_link_libraries(qfit Qt5::Widgets qfit::fit)
 
 if(WITH_QWT)
+  target_compile_definitions(qfit PRIVATE WITH_QWT)
   target_link_libraries(qfit qwt::qwt)
 endif(WITH_QWT)
 

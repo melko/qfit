@@ -1,12 +1,12 @@
 lib_version_array = meson.project_version().split('.')
 configure_file(
+    input: 'fitconfig.h.in',
     output: 'fitconfig.h',
+    format: 'cmake',
     configuration: {
-        'QFIT_VERSION_MAJOR': lib_version_array[0],
-        'QFIT_VERSION_MINOR': lib_version_array[1],
-        'QFIT_VERSION_PATCH': lib_version_array[2],
-        'WITH_GUI': qt5_dep.found(),
-        'WITH_QWT': qwt_dep.found(),
+        'PROJECT_VERSION_MAJOR': lib_version_array[0],
+        'PROJECT_VERSION_MINOR': lib_version_array[1],
+        'PROJECT_VERSION_PATCH': lib_version_array[2],
     },
 )
 lib_inc = include_directories('.')
