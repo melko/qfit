@@ -7,10 +7,8 @@ qt5_dep = dependency(
 )
 
 qwt_dep = dependency(
-    'Qwt',
+    'Qt5Qwt6',
     version: '>=6',
-    method: 'cmake',
-    cmake_module_path: 'CMakeModules',
     required: get_option('WITH_QWT'),
 )
 
